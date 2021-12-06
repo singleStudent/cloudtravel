@@ -1781,7 +1781,7 @@ public class MyConcurrentHashMap<K, V> extends AbstractMap implements Concurrent
     }
 
     /**
-     * 从 putVal 传入的参数是 1， binCount，binCount 默认是0，只有 hash 冲突了才会大于 1.且他的大小是链表的长度（如果不是红黑数结构的话）
+     * 从 putVal 传入的参数是 1， binCount，binCount 默认是0，只有 hash 冲突了才会大于 1.且他的大小是链表的长度（如果不是红黑数结构的话）12
      * @param x     the count to add
      * @param check if <0, don't check resize, if <= 1 only check if uncontended
      */
