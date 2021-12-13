@@ -30,6 +30,10 @@ public abstract class AbstractThreadCall implements Callable {
         }
     }
 
+    public void logPrint(String logBase, Object... args) {
+        LOGGER.info(logBase, args);
+    }
+
     @Override
     public Object call() {
         try {
