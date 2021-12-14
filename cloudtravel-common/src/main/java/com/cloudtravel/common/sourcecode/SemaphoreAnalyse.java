@@ -6,6 +6,7 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * Semaphore是一个线程同步的辅助类,可以维护控制访问当前资源的线程并发个数,并提供了同步机制 ,
+ * Semaphore的用途显然不会与Lock一致，不然就重复造轮子了。Semaphore最重要的一个功能便是：可以允许多个线程访问一个临界区。
  * 使用semaphore可以控制同时访问资源的个数.较多的如可以控制接口的并发个数
  * 对比Mutex :
  *      Mutex一般用来串行化Critical section代码的访问,即最多同时允许一个线程访问 . 定义比较明显

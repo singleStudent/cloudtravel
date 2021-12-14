@@ -12,21 +12,16 @@ public class CloudTravelException extends RuntimeException {
     public CloudTravelException() {
     }
 
+    public CloudTravelException(String code , String message) {
+        super(message);
+        this.code = code;
+        this.message = message;
+    }
+
     public CloudTravelException(String message) {
         super(message);
     }
 
-    public CloudTravelException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public CloudTravelException(Throwable cause) {
-        super(cause);
-    }
-
-    public CloudTravelException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 
     public String getCode() {
         return code;
