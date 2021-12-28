@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudtravel.producer.dao.IBaseUserModelMapper">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.common.producer.model.BaseUserModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="VARCHAR" property="bizId" />
+    <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
+    <result column="user_type" jdbcType="SMALLINT" property="userType" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="id_number" jdbcType="VARCHAR" property="idNumber" />
+    <result column="id_num_type" jdbcType="SMALLINT" property="idNumType" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_update" jdbcType="TIMESTAMP" property="gmtUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, biz_id, tenant_id, user_type, user_name, id_number, id_num_type, gmt_create, 
+    gmt_update
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from b_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from b_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cloudtravel.common.producer.model.BaseUserModel">
+    insert into b_user (id, biz_id, tenant_id, 
+      user_type, user_name, id_number, 
+      id_num_type, gmt_create, gmt_update
+      )
+    values (#{id,jdbcType=BIGINT}, #{bizId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=SMALLINT}, #{userName,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
+      #{idNumType,jdbcType=SMALLINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloudtravel.common.producer.model.BaseUserModel"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into b_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bizId != null">
+        biz_id,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="idNumber != null">
+        id_number,
+      </if>
+      <if test="idNumType != null">
+        id_num_type,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bizId != null">
+        #{bizId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumType != null">
+        #{idNumType,jdbcType=SMALLINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.producer.model.BaseUserModel">
+    update b_user
+    <set>
+      <if test="bizId != null">
+        biz_id = #{bizId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumType != null">
+        id_num_type = #{idNumType,jdbcType=SMALLINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.producer.model.BaseUserModel">
+    update b_user
+    set biz_id = #{bizId,jdbcType=VARCHAR},
+      tenant_id = #{tenantId,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=SMALLINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      id_num_type = #{idNumType,jdbcType=SMALLINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
