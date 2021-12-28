@@ -13,6 +13,8 @@ import java.io.Serializable;
 public class UserInfoModel implements Serializable {
     private static final long serialVersionUID = -922008716988113296L;
 
+    private Long id;
+
     private String bizId;
 
     private String userName;

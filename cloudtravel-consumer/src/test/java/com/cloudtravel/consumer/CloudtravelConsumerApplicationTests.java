@@ -1,13 +1,14 @@
 package com.cloudtravel.consumer;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CloudtravelConsumerApplicationTests {
+public class CloudtravelConsumerApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }
