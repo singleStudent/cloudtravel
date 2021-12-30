@@ -8,7 +8,6 @@ import com.cloudtravel.common.producer.model.BaseUserModel;
 import com.cloudtravel.common.producer.service.IBaseUserService;
 import com.cloudtravel.consumer.dao.IBaseSpDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BaseSpServiceImpl implements IBaseSpService {
@@ -20,7 +19,6 @@ public class BaseSpServiceImpl implements IBaseSpService {
     IBaseSpDao baseSpDao;
 
     @Override
-    @Transactional
     public String testAddUserAndSp() {
         BaseUserModel userModel = new BaseUserModel();
         userModel.setBizId("999999999");
