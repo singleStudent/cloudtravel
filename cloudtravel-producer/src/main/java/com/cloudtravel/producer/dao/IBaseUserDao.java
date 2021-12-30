@@ -4,7 +4,7 @@ import com.cloudtravel.common.producer.model.BaseUserModel;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface IBaseUserModelMapper {
+public interface IBaseUserDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(BaseUserModel record);

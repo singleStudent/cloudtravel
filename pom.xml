@@ -43,6 +43,7 @@
         <module>cloudtravel-consumer</module>
         <module>cloudtravel-elesticsearch</module>
         <module>common-producer</module>
+        <module>common-consumer</module>
     </modules>
 
     <dependencies>

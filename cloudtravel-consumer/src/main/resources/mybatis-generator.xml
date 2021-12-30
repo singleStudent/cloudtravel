@@ -14,7 +14,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/cloudtravel_producer"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/cloudtravel_consumer"
                         userId="root"
                         password="root"/>
 
@@ -23,8 +23,8 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.cloudtravel.common.producer.model"
-                            targetProject="D:\code\cloudtravel\common-producer\src\main\java">
+        <javaModelGenerator targetPackage="com.cloudtravel.common.consumer.model"
+                            targetProject="D:\code\cloudtravel\common-consumer\src\main\java">
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否对model添加 构造函数 -->
@@ -37,18 +37,18 @@
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="D:\code\cloudtravel\cloudtravel-producer\src\main\resources">
+                         targetProject="D:\code\cloudtravel\cloudtravel-consumer\src\main\resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.cloudtravel.producer.dao"
-                             targetProject="D:\code\cloudtravel\cloudtravel-producer\src\main\java"
+        <javaClientGenerator targetPackage="com.cloudtravel.consumer.dao"
+                             targetProject="D:\code\cloudtravel\cloudtravel-consumer\src\main\java"
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="mall_accessory" domainObjectName="MallAccessoryModel"
+        <table tableName="t_account" domainObjectName="BaseAccount"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

@@ -1,4 +1,5 @@
-package com.cloudtravel.common.producer;
+package com.cloudtravel.common.producer.service;
+
 
 import com.cloudtravel.common.producer.model.BaseUserModel;
 

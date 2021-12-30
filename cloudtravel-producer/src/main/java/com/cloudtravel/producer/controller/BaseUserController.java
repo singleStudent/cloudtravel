@@ -1,7 +1,7 @@
 package com.cloudtravel.producer.controller;
 
 
-import com.cloudtravel.common.producer.IBaseUserService;
+import com.cloudtravel.common.producer.service.IBaseUserService;
 import com.cloudtravel.common.producer.model.BaseUserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

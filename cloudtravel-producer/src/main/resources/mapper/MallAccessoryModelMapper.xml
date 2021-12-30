@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudtravel.producer.dao.MallAccessoryModelMapper">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.common.producer.model.MallAccessoryModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="deleteStatus" jdbcType="BIT" property="deletestatus" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="size" jdbcType="REAL" property="size" />
+    <result column="width" jdbcType="INTEGER" property="width" />
+    <result column="album_id" jdbcType="BIGINT" property="albumId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="config_id" jdbcType="BIGINT" property="configId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, addTime, deleteStatus, ext, height, info, name, path, size, width, album_id, 
+    user_id, config_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_accessory
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mall_accessory
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+    insert into mall_accessory (id, addTime, deleteStatus, 
+      ext, height, info, 
+      name, path, size, width, 
+      album_id, user_id, config_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{ext,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, #{info,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{size,jdbcType=REAL}, #{width,jdbcType=INTEGER}, 
+      #{albumId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{configId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+    insert into mall_accessory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="addtime != null">
+        addTime,
+      </if>
+      <if test="deletestatus != null">
+        deleteStatus,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="albumId != null">
+        album_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="configId != null">
+        config_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null">
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=REAL},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="albumId != null">
+        #{albumId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="configId != null">
+        #{configId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+    update mall_accessory
+    <set>
+      <if test="addtime != null">
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null">
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=REAL},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="albumId != null">
+        album_id = #{albumId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="configId != null">
+        config_id = #{configId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+    update mall_accessory
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      ext = #{ext,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      info = #{info,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      size = #{size,jdbcType=REAL},
+      width = #{width,jdbcType=INTEGER},
+      album_id = #{albumId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      config_id = #{configId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
