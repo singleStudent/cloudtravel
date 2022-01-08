@@ -1,18 +1,13 @@
 package com.cloudtravel.consumer.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.cloudtravel.common.consumer.model.BaseSpModel;
 import com.cloudtravel.common.consumer.service.IBaseSpService;
-import com.cloudtravel.common.producer.model.BaseUserModel;
-import com.cloudtravel.common.producer.service.IBaseUserService;
+import com.cloudtravel.consumer.socket.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.UUID;
 
 /**
  * @author Administrator
@@ -28,5 +23,10 @@ public class BaseSpAndUserController {
     @GetMapping("index")
     public String index() {
         return spService.testAddUserAndSp();
+    }
+
+    @GetMapping("sendMessage")
+    public void sendMessageToFront(@RequestParam("msg")String msg) throws Throwable{
+        WebSocketService.sendInfoMessage(msg , "111");
     }
 }

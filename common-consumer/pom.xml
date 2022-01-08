@@ -16,12 +16,4 @@
 	<description>common for consumer</description>
 	<packaging>jar</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.cloudtravel.common</groupId>
-			<artifactId>cloudtravel-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
-
 </project>

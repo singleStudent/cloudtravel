@@ -60,8 +60,4 @@ public class OCRUtil {
         }
         return readImage(file , tessData , language);
     }
-
-    public static void main(String[] args) {
-        System.out.println(OCRUtil.readImage("C:\\Users\\Administrator\\Desktop\\图片\\testOCR2.png", null , null));
-    }
 }

@@ -18,6 +18,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.cloudtravel.common</groupId>
+			<artifactId>cloudtravel-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.cloudtravel.common.producer</groupId>
 			<artifactId>common-producer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

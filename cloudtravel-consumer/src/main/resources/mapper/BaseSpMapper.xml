@@ -43,7 +43,8 @@
       #{addDt,jdbcType=BIGINT}, #{updAction,jdbcType=VARCHAR}, #{updAccountId,jdbcType=BIGINT}, 
       #{updTermIp,jdbcType=VARCHAR}, #{updDt,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel">
+  <insert id="insertSelective" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel"
+          useGeneratedKeys="true" keyColumn="SP_ID" keyProperty="spId">
     insert into t_sp
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="spId != null">

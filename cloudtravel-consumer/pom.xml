@@ -17,6 +17,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.cloudtravel.common</groupId>
+			<artifactId>cloudtravel-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.cloudtravel.common.consumer</groupId>
 			<artifactId>common-consumer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -25,6 +30,11 @@
 			<groupId>com.cloudtravel.producer</groupId>
 			<artifactId>cloudtravel-producer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,6 +53,17 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<version>${springboot-starter.version}</version>
+		</dependency>
+		<dependency>
+			<!-- websocket -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+			<version>${springboot-starter.version}</version>
 		</dependency>
 	</dependencies>
 
