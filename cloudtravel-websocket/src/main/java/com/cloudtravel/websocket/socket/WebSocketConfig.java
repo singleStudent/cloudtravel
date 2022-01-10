@@ -1,4 +1,4 @@
-package com.cloudtravel.consumer.socket;
+package com.cloudtravel.websocket.socket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

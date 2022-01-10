@@ -16,7 +16,7 @@
 
     //判断当前浏览器是否支持WebSocket, 主要此处要更换为自己的地址
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8082/websocket/webSocketByTomcat/111");
+        websocket = new WebSocket("ws://localhost:8083/websocket/webSocketByTomcat/111");
     } else {
         alert('Not support websocket')
     }
