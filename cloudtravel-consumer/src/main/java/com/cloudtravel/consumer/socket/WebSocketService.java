@@ -3,7 +3,6 @@ package com.cloudtravel.consumer.socket;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -18,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @ServerEndpoint("/websocket/webSocketByTomcat/{userId}")
 @Component
-@CrossOrigin
 public class WebSocketService {
 
     /** 在线人数 */
