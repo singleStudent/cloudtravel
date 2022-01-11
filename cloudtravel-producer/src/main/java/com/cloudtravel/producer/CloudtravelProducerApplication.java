@@ -1,18 +1,21 @@
 package com.cloudtravel.producer;
 
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
-@EnableDubbo
-@EnableScheduling
+//@EnableDubbo
+@PropertySources(value = {@PropertySource("classpath:application.properties")})
+@ImportResource(locations={"classpath:META-INF/*.xml"})
 public class CloudtravelProducerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CloudtravelProducerApplication.class, args);
+		 ApplicationContext acx = SpringApplication.run(CloudtravelProducerApplication.class, args);
+
 	}
 
 }

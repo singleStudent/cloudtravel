@@ -1,6 +1,5 @@
 package com.cloudtravel.consumer.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.cloudtravel.common.consumer.model.BaseSpModel;
 import com.cloudtravel.common.consumer.service.IBaseSpService;
@@ -12,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class BaseSpServiceImpl implements IBaseSpService {
 
-    @Reference(interfaceClass = IBaseUserService.class , version = "0.0.1")
+    @Autowired
     IBaseUserService userService;
 
     @Autowired
