@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
+		<version>2.6.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -25,7 +25,7 @@
 		<poi.version>4.1.2</poi.version>
 		<fastJson.version>1.2.76</fastJson.version>
 		<lombok.version>1.18.20</lombok.version>
-		<springboot-starter.version>2.1.6.RELEASE</springboot-starter.version>
+		<springboot-starter.version>2.6.1</springboot-starter.version>
 		<commons-codec.version>1.14</commons-codec.version>
         <mysql-connector-java.version>5.1.37</mysql-connector-java.version>
         <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
@@ -45,6 +45,7 @@
         <module>cloudtravel-consumer</module>
         <module>cloudtravel-elesticsearch</module>
         <module>cloudtravel-websocket</module>
+        <module>cloudtravel-kafka</module>
     </modules>
 
     <dependencies>
