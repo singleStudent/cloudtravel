@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>cloudtravel-parent</artifactId>
+		<groupId>com.cloudtravel</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.cloudtravel.kafkaLearn</groupId>
+	<artifactId>cloudtravel-kafka</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>cloudtravel-kafka</name>
+	<description>kafka project for cloudtravel</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.cloudtravel.common</groupId>
+			<artifactId>cloudtravel-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- spring boot : 2.6.*版本对应Kafka2.8.*版本的 -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+
+	</dependencies>
+</project>
