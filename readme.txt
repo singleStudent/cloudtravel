@@ -1,2 +1,3 @@
 =====
-智慧云旅平台.
+框架实战
+springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticSearch
