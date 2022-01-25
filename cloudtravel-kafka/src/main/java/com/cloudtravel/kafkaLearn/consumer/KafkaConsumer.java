@@ -2,7 +2,6 @@ package com.cloudtravel.kafkaLearn.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaConsumer {
 
-    @KafkaListener(id = "testListener" , topics = {"test"} , containerFactory = "kafkaMessageListenerContainer")
+    @KafkaListener(id = "testListener" , topics = {"test"})
     public void onMessageWithTopicTest(ConsumerRecord<? , ?> record) {
         System.out.println("简单消费："+record.topic()+"-"+record.partition()+"-"+record.value());
     }
@@ -24,6 +23,6 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = {"test2"})
     public void onMessageWithTopicTest2(ConsumerRecord<? , ?> record) {
-        System.out.println("简单消费："+record.topic()+"-"+record.partition()+"-"+record.value());
+        System.out.println("自定义分区策略消费："+record.topic()+"-"+record.partition()+"-"+record.value());
     }
 }
