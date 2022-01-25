@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.cloudtravel.cache</groupId>
-	<artifactId>cloudtravel-cache</artifactId>
+	<groupId>com.cloudtravel.redis</groupId>
+	<artifactId>cloudtravel-redis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cloudtravel-cache</name>
-	<description>cloudtravel-cache</description>
+	<name>cloudtravel-redis</name>
+	<description>cloudtravel-redis</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
