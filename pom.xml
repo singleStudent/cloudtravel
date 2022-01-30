@@ -28,7 +28,7 @@
 		<springboot-starter.version>2.6.1</springboot-starter.version>
 		<commons-codec.version>1.14</commons-codec.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
-        <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>2.2.0</mybatis-spring-boot-starter.version>
         <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -39,7 +39,6 @@
 		<module>cloudtravel-common</module>
         <module>common-producer</module>
         <module>common-consumer</module>
-        <module>cloudtravel-redis</module>
         <module>cloudtravel-rocketmq</module>
         <module>cloudtravel-producer</module>
         <module>cloudtravel-consumer</module>
@@ -168,23 +167,6 @@
                 <artifactId>poi-ooxml-schemas</artifactId>
                 <version>${poi.version}</version>
             </dependency>
-            <!--seata-->
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-alibaba-seata</artifactId>-->
-<!--                <version>2.1.0.RELEASE</version>-->
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <artifactId>seata-all</artifactId>-->
-<!--                        <groupId>io.seata</groupId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>io.seata</groupId>-->
-<!--                <artifactId>seata-all</artifactId>-->
-<!--                <version>${seata.version}</version>-->
-<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
@@ -193,7 +175,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.1.6.RELEASE</version>
+                <version>${springboot-starter.version}</version>
 			</plugin>
 		</plugins>
 	</build>
