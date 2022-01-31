@@ -30,4 +30,6 @@ public class BaseUserModel implements Serializable {
     private Date gmtCreate;
 
     private Date gmtUpdate;
+
+    private String templateId;
 }

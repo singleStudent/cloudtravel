@@ -6,5 +6,5 @@ public interface IBaseSpService {
 
     public String testAddUserAndSp();
 
-    public Long addSp(BaseSpModel spModel);
+    public Long addSp(String templateId , BaseSpModel spModel);
 }

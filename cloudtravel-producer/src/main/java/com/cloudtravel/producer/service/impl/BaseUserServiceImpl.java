@@ -6,7 +6,6 @@ import com.cloudtravel.producer.dao.IBaseUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//@Service(interfaceClass = IBaseUserService.class,version = "0.0.1")
 @Service
 public class BaseUserServiceImpl implements IBaseUserService {
 
