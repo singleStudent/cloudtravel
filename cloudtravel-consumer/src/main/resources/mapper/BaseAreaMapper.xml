@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudtravel.consumer.dao.IBaseAreaDao">
-  <resultMap id="BaseResultMap" type="com.cloudtravel.common.consumer.model.BaseAreaModel">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.consumer.common.model.BaseAreaModel">
     <id column="AREA_ID" jdbcType="BIGINT" property="areaId" />
     <result column="PARENT_AREA_ID" jdbcType="BIGINT" property="parentAreaId" />
     <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName" />
@@ -45,7 +45,7 @@
     delete from b_area
     where AREA_ID = #{areaId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cloudtravel.common.consumer.model.BaseAreaModel">
+  <insert id="insert" parameterType="com.cloudtravel.consumer.common.model.BaseAreaModel">
     insert into b_area (AREA_ID, PARENT_AREA_ID, AREA_NAME, 
       FULL_AREA_NAME, SHORT_NAME, FULL_SHORT_NAME, 
       AREA_LEVEL, CITY_CODE, ZIP_CODE, 
@@ -65,7 +65,7 @@
       #{addDt,jdbcType=BIGINT}, #{updAction,jdbcType=VARCHAR}, #{updAccountId,jdbcType=BIGINT}, 
       #{updTermIp,jdbcType=VARCHAR}, #{updDt,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.common.consumer.model.BaseAreaModel">
+  <insert id="insertSelective" parameterType="com.cloudtravel.consumer.common.model.BaseAreaModel">
     insert into b_area
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="areaId != null">
@@ -228,7 +228,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.consumer.model.BaseAreaModel">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.consumer.common.model.BaseAreaModel">
     update b_area
     <set>
       <if test="parentAreaId != null">
@@ -309,7 +309,7 @@
     </set>
     where AREA_ID = #{areaId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.consumer.model.BaseAreaModel">
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.consumer.common.model.BaseAreaModel">
     update b_area
     set PARENT_AREA_ID = #{parentAreaId,jdbcType=BIGINT},
       AREA_NAME = #{areaName,jdbcType=VARCHAR},

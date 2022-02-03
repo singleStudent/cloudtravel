@@ -17,7 +17,7 @@
     <dubbo:protocol name="${config.dubbo.protocol.name}" port="${config.dubbo.protocol.port}" payload="20971520"/>
 
     <bean id="baseUserService" class="com.cloudtravel.producer.service.impl.BaseUserServiceImpl"/>
-    <dubbo:service interface="com.cloudtravel.common.producer.service.IBaseUserService" ref="baseUserService"
+    <dubbo:service interface="com.cloudtravel.producer.common.service.IBaseUserService" ref="baseUserService"
                    protocol="dubbo" retries="0" timeout="6000" executes="150" scope="remote" version="1.0"/>
 
 

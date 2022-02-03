@@ -1,6 +1,6 @@
 package com.cloudtravel.consumer.dao;
 
-import com.cloudtravel.common.consumer.model.BaseSpModel;
+import com.cloudtravel.consumer.common.model.BaseSpModel;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

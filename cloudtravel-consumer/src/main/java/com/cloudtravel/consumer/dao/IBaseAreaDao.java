@@ -1,6 +1,6 @@
 package com.cloudtravel.consumer.dao;
 
-import com.cloudtravel.common.consumer.model.BaseAreaModel;
+import com.cloudtravel.consumer.common.model.BaseAreaModel;
 import org.springframework.stereotype.Repository;
 
 @Repository

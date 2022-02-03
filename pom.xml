@@ -39,6 +39,7 @@
 		<module>cloudtravel-common</module>
         <module>common-producer</module>
         <module>common-consumer</module>
+        <module>common-websocket</module>
         <module>cloudtravel-rocketmq</module>
         <module>cloudtravel-producer</module>
         <module>cloudtravel-consumer</module>

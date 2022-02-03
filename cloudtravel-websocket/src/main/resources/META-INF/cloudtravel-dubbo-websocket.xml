@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <context:component-scan base-package="com.cloudtravel.websocket"/>
+
+    <dubbo:application name="${socket.dubbo.application.name}" owner="cloudtravel" organization="dubbox" />
+
+    <dubbo:registry protocol="${socket.dubbo.registry.protocol}" address="${socket.dubbo.registry.address}" timeout="6000"/>
+
+    <dubbo:protocol name="dubbo" port="20883" payload="20971520"/>
+
+    <bean id="sysSocketService" class="com.cloudtravel.websocket.service.impl.SysSocketServiceImpl"/>
+    <dubbo:service interface="com.cloudtravel.websocket.common.service.ISysSocketService" ref="sysSocketService"
+                   protocol="dubbo" retries="0" timeout="6000" executes="150" scope="remote" version="1.0"/>
+
+
+</beans>

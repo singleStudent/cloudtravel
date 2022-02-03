@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudtravel.producer.dao.IMallAccessoryDao">
-  <resultMap id="BaseResultMap" type="com.cloudtravel.common.producer.model.MallAccessoryModel">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.producer.common.model.MallAccessoryModel">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="addTime" jdbcType="TIMESTAMP" property="addtime" />
     <result column="deleteStatus" jdbcType="BIT" property="deletestatus" />
@@ -30,7 +30,7 @@
     delete from mall_accessory
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+  <insert id="insert" parameterType="com.cloudtravel.producer.common.model.MallAccessoryModel">
     insert into mall_accessory (id, addTime, deleteStatus, 
       ext, height, info, 
       name, path, size, width, 
@@ -42,7 +42,7 @@
       #{albumId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{configId,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+  <insert id="insertSelective" parameterType="com.cloudtravel.producer.common.model.MallAccessoryModel">
     insert into mall_accessory
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.producer.common.model.MallAccessoryModel">
     update mall_accessory
     <set>
       <if test="addtime != null">
@@ -169,7 +169,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.producer.model.MallAccessoryModel">
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.producer.common.model.MallAccessoryModel">
     update mall_accessory
     set addTime = #{addtime,jdbcType=TIMESTAMP},
       deleteStatus = #{deletestatus,jdbcType=BIT},

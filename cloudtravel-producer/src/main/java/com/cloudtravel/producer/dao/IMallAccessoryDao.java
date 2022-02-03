@@ -1,6 +1,6 @@
 package com.cloudtravel.producer.dao;
 
-import com.cloudtravel.common.producer.model.MallAccessoryModel;
+import com.cloudtravel.producer.common.model.MallAccessoryModel;
 
 public interface IMallAccessoryDao {
     int deleteByPrimaryKey(Long id);

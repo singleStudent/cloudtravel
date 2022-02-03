@@ -1,6 +1,6 @@
 package com.cloudtravel.consumer.dao;
 
-import com.cloudtravel.common.consumer.model.RoleModel;
+import com.cloudtravel.consumer.common.model.RoleModel;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,10 +1,10 @@
 package com.cloudtravel.consumer.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.cloudtravel.common.consumer.model.BaseSpModel;
-import com.cloudtravel.common.consumer.service.IBaseSpService;
-import com.cloudtravel.common.producer.model.BaseUserModel;
-import com.cloudtravel.common.producer.service.IBaseUserService;
+import com.cloudtravel.consumer.common.model.BaseSpModel;
+import com.cloudtravel.consumer.common.service.IBaseSpService;
+import com.cloudtravel.producer.common.model.BaseUserModel;
+import com.cloudtravel.producer.common.service.IBaseUserService;
 import com.cloudtravel.common.util.RandomHelper;
 import com.cloudtravel.consumer.dao.IBaseSpDao;
 import org.springframework.beans.factory.annotation.Autowired;

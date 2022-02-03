@@ -1,6 +1,6 @@
 package com.cloudtravel.producer.dao;
 
-import com.cloudtravel.common.producer.model.BaseUserModel;
+import com.cloudtravel.producer.common.model.BaseUserModel;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

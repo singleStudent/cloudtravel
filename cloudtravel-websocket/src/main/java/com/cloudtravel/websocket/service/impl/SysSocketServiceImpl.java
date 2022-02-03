@@ -1,9 +1,8 @@
 package com.cloudtravel.websocket.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.cloudtravel.websocket.service.ISysSocketService;
+import com.cloudtravel.websocket.common.service.ISysSocketService;
 import com.cloudtravel.websocket.socket.WebSocketService;
-
+import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 /**

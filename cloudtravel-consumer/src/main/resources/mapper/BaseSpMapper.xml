@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudtravel.consumer.dao.IBaseSpDao">
-  <resultMap id="BaseResultMap" type="com.cloudtravel.common.consumer.model.BaseSpModel">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.consumer.common.model.BaseSpModel">
     <id column="SP_ID" jdbcType="BIGINT" property="spId" />
     <result column="FOUNDER_ACCOUNT_ID" jdbcType="BIGINT" property="founderAccountId" />
     <result column="SP_NAME" jdbcType="VARCHAR" property="spName" />
@@ -31,7 +31,7 @@
     delete from t_sp
     where SP_ID = #{spId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel">
+  <insert id="insert" parameterType="com.cloudtravel.consumer.common.model.BaseSpModel">
     insert into t_sp (SP_ID, FOUNDER_ACCOUNT_ID, SP_NAME, 
       REGISTER_DATE, VERSION, DEL_FLG, 
       ADD_ACTION, ADD_ACCOUNT_ID, ADD_TERM_IP, 
@@ -43,7 +43,7 @@
       #{addDt,jdbcType=BIGINT}, #{updAction,jdbcType=VARCHAR}, #{updAccountId,jdbcType=BIGINT}, 
       #{updTermIp,jdbcType=VARCHAR}, #{updDt,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel"
+  <insert id="insertSelective" parameterType="com.cloudtravel.consumer.common.model.BaseSpModel"
           useGeneratedKeys="true" keyColumn="SP_ID" keyProperty="spId">
     insert into t_sp
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.consumer.common.model.BaseSpModel">
     update t_sp
     <set>
       <if test="founderAccountId != null">
@@ -180,7 +180,7 @@
     </set>
     where SP_ID = #{spId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.consumer.model.BaseSpModel">
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.consumer.common.model.BaseSpModel">
     update t_sp
     set FOUNDER_ACCOUNT_ID = #{founderAccountId,jdbcType=BIGINT},
       SP_NAME = #{spName,jdbcType=VARCHAR},

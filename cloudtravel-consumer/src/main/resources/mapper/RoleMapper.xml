@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudtravel.consumer.dao.IRoleDao">
-  <resultMap id="BaseResultMap" type="com.cloudtravel.common.consumer.model.RoleModel">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.consumer.common.model.RoleModel">
     <id column="ROLE_ID" jdbcType="BIGINT" property="roleId" />
     <result column="SP_ID" jdbcType="BIGINT" property="spId" />
     <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
@@ -30,7 +30,7 @@
     delete from t_role
     where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cloudtravel.common.consumer.model.RoleModel">
+  <insert id="insert" parameterType="com.cloudtravel.consumer.common.model.RoleModel">
     insert into t_role (ROLE_ID, SP_ID, ROLE_NAME, 
       VERSION, DEL_FLG, ADD_ACTION, 
       ADD_ACCOUNT_ID, ADD_TERM_IP, ADD_DT, 
@@ -42,7 +42,7 @@
       #{updAction,jdbcType=VARCHAR}, #{updAccountId,jdbcType=BIGINT}, #{updTermIp,jdbcType=VARCHAR}, 
       #{updDt,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.common.consumer.model.RoleModel">
+  <insert id="insertSelective" parameterType="com.cloudtravel.consumer.common.model.RoleModel">
     insert into t_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roleId != null">
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.common.consumer.model.RoleModel">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.consumer.common.model.RoleModel">
     update t_role
     <set>
       <if test="spId != null">
@@ -169,7 +169,7 @@
     </set>
     where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.common.consumer.model.RoleModel">
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.consumer.common.model.RoleModel">
     update t_role
     set SP_ID = #{spId,jdbcType=BIGINT},
       ROLE_NAME = #{roleName,jdbcType=VARCHAR},

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootApplication
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
 @ImportResource(locations={"classpath:META-INF/*.xml"})
-@ComponentScan("com.cloudtravel.*.*")
+@ComponentScan({"com.cloudtravel.producer.*.*" , "com.cloudtravel.common.redis"})
 public class CloudtravelProducerApplication {
 
 	public static void main(String[] args) {
