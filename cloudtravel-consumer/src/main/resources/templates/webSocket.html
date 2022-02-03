@@ -68,7 +68,7 @@
 
     function sendA () {
         var message = document.getElementById('textB').value;
-        $.get('http://localhost:8082/spAndUser/sendMessage?msg='+message , function(data,status){
+        $.get('http://localhost:8082/webSocket/sendMessage?msg='+message , function(data,status){
              console.log('socket响应状态'+status)
         });
     }

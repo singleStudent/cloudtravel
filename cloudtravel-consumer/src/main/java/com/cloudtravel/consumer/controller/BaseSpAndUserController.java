@@ -20,16 +20,8 @@ public class BaseSpAndUserController {
     @Autowired(required = false)
     IBaseSpService spService;
 
-    @Autowired
-    ISysSocketService sysSocketService;
-
     @GetMapping("index")
     public String index() {
         return spService.testAddUserAndSp();
-    }
-
-    @GetMapping("sendMessage")
-    public void sendMessageToFront(@RequestParam("msg")String msg) throws Throwable{
-        sysSocketService.sendMessage("111" , msg);
     }
 }
