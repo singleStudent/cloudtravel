@@ -6,11 +6,13 @@
 
 <body>
 <input id="text" type="text" />
-<button onclick="send()">Send</button>
-<button onclick="closeWebSocket()">Close</button>
+<button onclick="send()">发消息</button>
+<button onclick="closeWebSocket()">Close</button><br/>
+<input id="textB" type="text" />
+<button onclick="sendA()">测试后端响应</button>
 <div id="message"></div>
 </body>
-
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">
     var websocket = null;
 
@@ -28,7 +30,7 @@
 
     //连接成功建立的回调方法
     websocket.onopen = function(event) {
-        //setMessageInnerHTML("open");
+        setMessageInnerHTML("open");
     }
 
     //接收到消息的回调方法
@@ -60,6 +62,13 @@
     function send() {
         var message = document.getElementById('text').value;
         websocket.send(message);
+    }
+
+    function sendA () {
+        var message = document.getElementById('textB').value;
+        $.get('http://localhost:8082/spAndUser/sendMessage?msg='+message , function(data,status){
+             console.log('socket响应状态'+status)
+        });
     }
 </script>
 </html>
