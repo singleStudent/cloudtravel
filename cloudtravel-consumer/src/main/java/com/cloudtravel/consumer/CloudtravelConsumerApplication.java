@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDubbo
 @EnableScheduling
 @ImportResource(locations = {"classpath:spring/*.xml"})
-@ComponentScan({"com.cloudtravel.consumer.*.*" , "com.cloudtravel.common.redis"})
+@ComponentScan({"com.cloudtravel.consumer" , "com.cloudtravel.common.redis"})
 public class CloudtravelConsumerApplication {
 
 	public static void main(String[] args) {
