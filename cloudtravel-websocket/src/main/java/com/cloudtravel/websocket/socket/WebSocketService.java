@@ -50,7 +50,7 @@ public class WebSocketService {
             addSocketOnlineCount();
         }
         try {
-            sendMessage("Connect Success");
+            sendMessage("初始化连接成功...");
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,13 +66,8 @@ public class WebSocketService {
 
     @OnMessage
     public void onMessage(String message) {
-        System.out.println(String.format("onMessage : value = {%s}" , message));
-        try {
-            if(StringUtils.isNotBlank(message) && StringUtils.isNotBlank(userId)) {
-                connectClients.get(userId).sendMessage(message);
-            }
-        }catch (IOException e) {
-            log.error("sendMessage Error , message = {%s} , errorInfo = {%s}" , message , e);
+        if(StringUtils.isNotBlank(message) && StringUtils.isNotBlank(userId)) {
+            System.out.println("userId = " + connectClients.get(userId) + "==>发来消息 = " + message);
         }
     }
 
@@ -99,7 +94,7 @@ public class WebSocketService {
     }
 
     public void sendMessage(String message)throws IOException {
-        this.session.getBasicRemote().sendText(message);
+        this.session.getBasicRemote().sendText("后端响应 : " + message);
     }
 
     public static void sendInfoMessage(String message , @PathParam("userId")String userId)throws IOException {
