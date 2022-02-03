@@ -4,4 +4,4 @@ springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticS
 
 代码同步github + gitee
 
-优化程序启动内容 + dubbo接口分离 +
+优化程序启动内容 + dubbo接口分离 + 消费端模块socket通讯Ajax测试
