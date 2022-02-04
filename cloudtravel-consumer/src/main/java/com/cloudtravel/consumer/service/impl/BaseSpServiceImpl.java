@@ -46,8 +46,8 @@ public class BaseSpServiceImpl implements IBaseSpService {
         Long spSeqId = this.addSp(templateId , spModel);
         String userSeqId = userService.insertUser(userModel);
 
-//        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId;
-        throw new RuntimeException("test");
+        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId;
+//        throw new RuntimeException("test");
     }
 
     @Override
