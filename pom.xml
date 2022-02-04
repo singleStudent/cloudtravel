@@ -33,6 +33,8 @@
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <hutools.version>5.4.3</hutools.version>
+        <alibaba-dubbo-starter.version>0.2.0</alibaba-dubbo-starter.version>
+        <seata.version>1.4.2</seata.version>
 	</properties>
 
 	<modules>
@@ -107,17 +109,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>${springboot-starter.version}</version>
-        </dependency>
         <!-- 引入spring-boot-starter以及dubbo和curator的依赖 -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>0.2.0</version>
+            <version>${alibaba-dubbo-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -155,6 +151,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>1.2.6</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${springboot-starter.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
             <dependency>
