@@ -18,7 +18,7 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = {"test5"})
     public void onMessageWithTopicTest5(ConsumerRecord<? , ?> record) {
-        System.out.println("简单消费："+record.topic()+"-"+record.partition()+"-"+record.value());
+        throw new RuntimeException("test");
     }
 
     @KafkaListener(topics = {"test2"})

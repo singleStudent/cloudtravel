@@ -10,21 +10,21 @@
 
 	<groupId>com.cloudtravel.kafkaLearn</groupId>
 	<artifactId>cloudtravel-kafka</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${cloudtravel.version}</version>
 	<name>cloudtravel-kafka</name>
 	<description>kafka project for cloudtravel</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.cloudtravel.common</groupId>
-			<artifactId>cloudtravel-common</artifactId>
+			<groupId>com.cloudtravel.common.kafka</groupId>
+			<artifactId>common-kafka</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- spring boot : 2.6.*版本对应Kafka2.8.*版本的 -->
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
-			<version>2.8.1</version>
+			<version>${spring-kafka.version}</version>
 		</dependency>
 
 	</dependencies>

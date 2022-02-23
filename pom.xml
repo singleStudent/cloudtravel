@@ -16,7 +16,7 @@
 	<packaging>pom</packaging>
 
     <name>cloudtravel-parent</name>
-    <description>云旅平台</description>
+    <description>框架学习实战</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,18 +35,20 @@
         <hutools.version>5.4.3</hutools.version>
         <alibaba-dubbo-starter.version>0.2.0</alibaba-dubbo-starter.version>
         <seata.version>1.4.2</seata.version>
+        <spring-kafka.version>2.8.1</spring-kafka.version>
 	</properties>
 
 	<modules>
 		<module>cloudtravel-common</module>
-        <module>common-producer</module>
-        <module>common-consumer</module>
-        <module>common-websocket</module>
         <module>cloudtravel-rocketmq</module>
+        <module>common-producer</module>
         <module>cloudtravel-producer</module>
+        <module>common-consumer</module>
         <module>cloudtravel-consumer</module>
         <module>cloudtravel-elesticsearch</module>
+        <module>common-websocket</module>
         <module>cloudtravel-websocket</module>
+        <module>common-kafka</module>
         <module>cloudtravel-kafka</module>
     </modules>
 
