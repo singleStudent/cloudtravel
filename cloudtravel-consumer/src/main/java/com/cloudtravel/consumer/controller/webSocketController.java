@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("webSocket")
@@ -23,6 +24,7 @@ public class webSocketController {
     }
 
     @GetMapping("sendMessage")
+    @ResponseBody
     public void sendMessageToFront(@RequestParam("msg")String msg) throws Throwable{
         sysSocketService.sendMessage("111" , msg);
     }
