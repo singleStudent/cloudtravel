@@ -1,6 +1,5 @@
 package com.cloudtravel.consumer.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.cloudtravel.consumer.common.model.BaseSpModel;
 import com.cloudtravel.consumer.common.service.IBaseSpService;
 import com.cloudtravel.producer.common.model.BaseUserModel;
@@ -10,6 +9,7 @@ import com.cloudtravel.consumer.dao.IBaseSpDao;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BaseSpServiceImpl implements IBaseSpService {

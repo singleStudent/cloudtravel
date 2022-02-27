@@ -22,11 +22,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.cloudtravel.websocket</groupId>
-			<artifactId>cloudtravel-websocket</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.cloudtravel.common.consumer</groupId>
 			<artifactId>common-consumer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
