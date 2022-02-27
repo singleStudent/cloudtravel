@@ -7,18 +7,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Base64;
+
 import net.coobird.thumbnailator.Thumbnails;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /**
- * 
  * @Title: ImageHelper.java
  * @Package com.jarvis.base.util
  * @Description:图片处理工具类。
- * @author Jack 
- * @date 2017年9月2日 下午3:04:40
- * @version V1.0  
+ * @author java11
+ * @date 2022.02.27
+ * @version V2.0  
  */
 @SuppressWarnings("restriction")
 public class ImageHelper {
@@ -30,12 +29,12 @@ public class ImageHelper {
 	 * @出参：void
 	 */
 	public static void generateImage(String imgStr, String imgFile) throws IOException {
-		BASE64Decoder decoder = new BASE64Decoder();
+		Base64.Decoder decoder = Base64.getMimeDecoder();
 		// Base64解码
 		byte[] bytes;
 		OutputStream out = null;
 		try {
-			bytes = decoder.decodeBuffer(imgStr);
+			bytes = decoder.decode(imgStr);
 			for (int i = 0; i < bytes.length; ++i) {
 				if (bytes[i] < 0) {// 调整异常数据
 					bytes[i] += 256;
@@ -80,8 +79,8 @@ public class ImageHelper {
 		}
 
 		// 对字节数组Base64编码
-		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(data);// 返回Base64编码过的字节数组字符串
+		Base64.Encoder encoder = Base64.getMimeEncoder();
+		return encoder.encodeToString(data);// 返回Base64编码过的字节数组字符串
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class ImageHelper {
 			throw new IOException();
 		}
 		byte[] bs = os.toByteArray();
-		String s = new BASE64Encoder().encode(bs);
+		String s = Base64.getMimeEncoder().encodeToString(bs);
 		return s;
 	}
 
@@ -113,7 +112,7 @@ public class ImageHelper {
 	 */
 	public static InputStream base64ToIo(String strBase64) throws IOException {
 		// 解码，然后将字节转换为文件
-		byte[] bytes = new BASE64Decoder().decodeBuffer(strBase64); // 将字符串转换为byte数组
+		byte[] bytes = Base64.getMimeDecoder().decode(strBase64); // 将字符串转换为byte数组
 		return new ByteArrayInputStream(bytes);
 	}
 }
