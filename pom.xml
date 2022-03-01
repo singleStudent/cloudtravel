@@ -36,6 +36,8 @@
         <alibaba-dubbo-starter.version>0.2.0</alibaba-dubbo-starter.version>
         <seata.version>1.4.2</seata.version>
         <spring-kafka.version>2.8.1</spring-kafka.version>
+        <com-alibaba-druid.version>1.2.5</com-alibaba-druid.version>
+        <shardingsphere.version>5.1.0</shardingsphere.version>
 	</properties>
 
 	<modules>
@@ -50,6 +52,7 @@
         <module>cloudtravel-websocket</module>
         <module>common-kafka</module>
         <module>cloudtravel-kafka</module>
+        <module>cloudtravel-shardingsphere</module>
     </modules>
 
     <dependencies>
@@ -152,7 +155,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.2.6</version>
+                <version>${com-alibaba-druid.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
             <dependency>

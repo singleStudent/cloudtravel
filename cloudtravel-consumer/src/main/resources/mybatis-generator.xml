@@ -48,7 +48,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="t_account" domainObjectName="BaseAccount"
+        <table tableName="t_sp" domainObjectName="BaseAccount"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
