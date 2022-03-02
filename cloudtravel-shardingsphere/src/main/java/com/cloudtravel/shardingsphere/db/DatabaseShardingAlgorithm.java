@@ -20,10 +20,6 @@ public class DatabaseShardingAlgorithm implements PreciseShardingAlgorithm {
     public String doSharding(Collection collection, PreciseShardingValue preciseShardingValue) {
         String dataSource = null;
         String tableName = preciseShardingValue.getLogicTableName();
-        if(!dataSourceConfigBase.getShardingDatabaseTableNames().contains(tableName.toUpperCase())) {
-            System.out.println(tableName + "不走分库,走默认库" + dataSourceConfigBase.getDatasourceName1());
-            return dataSourceConfigBase.getDatasourceName1();
-        }
         Integer value = StringUtils.isNotEmpty(preciseShardingValue.getValue().toString()) ?
                 Integer.parseInt(preciseShardingValue.getValue().toString()) : 0;
         if (value % 2 == 0) {

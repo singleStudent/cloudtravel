@@ -24,11 +24,6 @@ public class TableShardingAlgorithm implements ComplexKeysShardingAlgorithm {
         List<String> tables = new ArrayList<>();
         Long bizId = (Long) ((List) complexKeysShardingValue.getColumnNameAndShardingValuesMap().get("biz_id")).get(0);
         String tableName = complexKeysShardingValue.getLogicTableName();
-        if(!SHARDING_TABLE_NAMES.contains(tableName.toUpperCase())) {
-            tables.add(tableName);
-            System.out.println(tableName + "不走分表,执行默认SQL");
-            return tables;
-        }
         String physicsTable = tableName  + "_";
         physicsTable += String.valueOf(bizId % 2);
         tables.add(physicsTable);
