@@ -1,6 +1,6 @@
 =====
 框架实战
-springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticSearch
+springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticSearch + apache.sharding sphere
 
 代码同步github + gitee
 
