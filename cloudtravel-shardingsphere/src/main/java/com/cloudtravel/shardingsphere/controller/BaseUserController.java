@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("user")
 @Controller
 @ResponseBody
-public class BaseUerController {
+public class BaseUserController {
 
     @Autowired
     TUserModelMapper userModelMapper;
@@ -27,6 +27,7 @@ public class BaseUerController {
         model.setIdNumber("231");
         model.setIdNumType(0);
         userModelMapper.insertSelective(model);
-        return model.getId();
+        throw new RuntimeException("test");
+//        return model.getId();
     }
 }
