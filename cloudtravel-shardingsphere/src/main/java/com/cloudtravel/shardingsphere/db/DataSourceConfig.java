@@ -11,14 +11,13 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -28,25 +27,18 @@ import java.util.Properties;
 
 @Configuration
 @MapperScan(basePackages = "com.cloudtravel.shardingsphere" , sqlSessionTemplateRef = "testSqlSessionTemplate")
+@Order(11)
 public class DataSourceConfig {
-
-    private String shardDataSource0 ="cloudtravel_consumer1";
-    private String shardDataSource1 ="cloudtravel_consumer2";
-
-    private String defaultDataSource="cloudtravel_consumer1";
-
-    @Value("${mybatis.mapper-locations}")
-    private String mapperLocations;
-
-    private String exeDatabaseShardingColumn = "TENANT_ID";
-
-    private String executionShardingColumn = "BIZ_ID";
 
     @Autowired
     private TableShardingAlgorithm tableShardingAlgorithmCom;
 
     @Autowired
     private DatabaseShardingAlgorithm databaseShardingAlgorithm;
+
+    @Autowired
+    DataSourceConfigBase dataSourceConfigBase;
+
     /**
      * 设置数据源
      * @return
@@ -59,7 +51,11 @@ public class DataSourceConfig {
 
         // 设置默认的分库策略
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(
-                new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
+                new StandardShardingStrategyConfiguration(
+                        dataSourceConfigBase.getDatabaseShardingColumnDefault(),
+                        databaseShardingAlgorithm
+                )
+        );
         //  配置表规则
         shardingRuleConfig.getTableRuleConfigs().
                 addAll(Arrays.asList(
@@ -68,7 +64,7 @@ public class DataSourceConfig {
                         )
                 );
         // 设置默认数据库
-        shardingRuleConfig.setDefaultDataSourceName(defaultDataSource);
+        shardingRuleConfig.setDefaultDataSourceName(dataSourceConfigBase.getDatasourceName1());
 
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
     }
@@ -85,7 +81,7 @@ public class DataSourceConfig {
     public SqlSessionFactory sqlSessionFactory(DataSource shardingDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(shardingDataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(dataSourceConfigBase.getMapperLocations()));
         return bean.getObject();
     }
 
@@ -110,8 +106,14 @@ public class DataSourceConfig {
      * @return
      */
     private TableRuleConfiguration getBUserRuleConfiguration() {
-        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("b_user", "cloudtravel_consumer$->{1..2}.b_user");
-        orderTableRuleConfig.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
+        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("b_user",
+                dataSourceConfigBase.getUserActualDataNodes());
+        orderTableRuleConfig.setDatabaseShardingStrategyConfig(
+                new StandardShardingStrategyConfiguration(
+                        dataSourceConfigBase.getDatabaseShardingColumnDefault(),
+                        databaseShardingAlgorithm
+                )
+        );
         return orderTableRuleConfig;
     }
 
@@ -120,9 +122,20 @@ public class DataSourceConfig {
      * @return
      */
     private TableRuleConfiguration getTSpRuleConfiguration() {
-        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("t_sp", "cloudtravel_consumer$->{1..2}.t_sp_$->{0..1}");
-        orderTableRuleConfig.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
-        orderTableRuleConfig.setTableShardingStrategyConfig(new ComplexShardingStrategyConfiguration(executionShardingColumn,tableShardingAlgorithmCom));
+        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("t_sp",
+                dataSourceConfigBase.getSpActualDataNodes());
+        orderTableRuleConfig.setDatabaseShardingStrategyConfig(
+                new StandardShardingStrategyConfiguration(
+                        dataSourceConfigBase.getDatabaseShardingColumnDefault(),
+                        databaseShardingAlgorithm
+                )
+        );
+        orderTableRuleConfig.setTableShardingStrategyConfig(
+                new ComplexShardingStrategyConfiguration(
+                        dataSourceConfigBase.getTableSpShardingColumn(),
+                        tableShardingAlgorithmCom
+                )
+        );
         return orderTableRuleConfig;
     }
 
@@ -145,8 +158,8 @@ public class DataSourceConfig {
      */
     private Map<String, DataSource> createDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
-        result.put(shardDataSource0,druidDataSource1());
-        result.put(shardDataSource1, druidDataSource2());
+        result.put(dataSourceConfigBase.getDatasourceName1(),druidDataSource1());
+        result.put(dataSourceConfigBase.getDatasourceName2(), druidDataSource2());
         return result;
     }
 
