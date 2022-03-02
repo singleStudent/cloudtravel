@@ -1,5 +1,6 @@
 package com.cloudtravel.producer;
 
+import com.alibaba.boot.dubbo.autoconfigure.DubboAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

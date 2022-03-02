@@ -1,6 +1,8 @@
 package com.cloudtravel.shardingsphere.db;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import io.seata.rm.datasource.DataSourceProxy;
+import io.seata.spring.annotation.GlobalTransactionScanner;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
@@ -11,6 +13,8 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +30,7 @@ import java.util.Map;
 import java.util.Properties;
 
 @Configuration
-@MapperScan(basePackages = "com.cloudtravel.shardingsphere" , sqlSessionTemplateRef = "testSqlSessionTemplate")
+@MapperScan(basePackages = "com.cloudtravel.shardingsphere.dao" , sqlSessionTemplateRef = "testSqlSessionTemplate")
 @Order(11)
 public class DataSourceConfig {
 
@@ -38,6 +42,12 @@ public class DataSourceConfig {
 
     @Autowired
     DataSourceConfigBase dataSourceConfigBase;
+
+    @Value("${seata.application-id}")
+    public String SEATA_APPLICATION_ID;
+
+    @Value("${seata.tx-service-group}")
+    public String TX_SERVICE_GROUP;
 
     /**
      * 设置数据源
@@ -69,6 +79,11 @@ public class DataSourceConfig {
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
     }
 
+    //for seata
+    @Bean("dataSourceProxy")
+    public DataSourceProxy dataSourceProxy(@Qualifier("shardingDataSource") DataSource dataSource) {
+        return new DataSourceProxy(dataSource);
+    }
 
     /**
      * 获取sqlSessionFactory实例
@@ -78,7 +93,7 @@ public class DataSourceConfig {
      */
     @Bean
     @Primary
-    public SqlSessionFactory sqlSessionFactory(DataSource shardingDataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("shardingDataSource") DataSource shardingDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(shardingDataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(dataSourceConfigBase.getMapperLocations()));
@@ -163,4 +178,8 @@ public class DataSourceConfig {
         return result;
     }
 
+    @Bean("ShardGlobalTransactionScanner")
+    public GlobalTransactionScanner globalTransactionScanner() {
+        return new GlobalTransactionScanner(SEATA_APPLICATION_ID , TX_SERVICE_GROUP);
+    }
 }

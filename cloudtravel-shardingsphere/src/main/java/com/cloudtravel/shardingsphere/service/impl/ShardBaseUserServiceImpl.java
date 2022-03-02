@@ -1,24 +1,21 @@
-package com.cloudtravel.shardingsphere.controller;
+package com.cloudtravel.shardingsphere.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.cloudtravel.shardingsphere.dao.TUserModelMapper;
 import com.cloudtravel.shardingsphere.model.TUserModel;
+import com.cloudtravel.shardingsphere.service.ShardBaseUserService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("user")
-@Controller
-@ResponseBody
-public class BaseUserController {
+@Service(interfaceClass = ShardBaseUserService.class , owner = "cloudtravel" , version = "1.0")
+public class ShardBaseUserServiceImpl implements ShardBaseUserService {
 
     @Autowired
     TUserModelMapper userModelMapper;
 
-    @GetMapping("add")
-    public Long addUser(@RequestParam("tenantId") Long tenantId) {
+    @Override
+    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+    public Long addUser(Long tenantId) {
         TUserModel model = new TUserModel();
         model.setTenantId(tenantId.toString());
         model.setBizId("1");

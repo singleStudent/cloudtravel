@@ -59,6 +59,42 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<version>${springboot-starter.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter -->
+		<dependency>
+			<groupId>io.seata</groupId>
+			<artifactId>seata-spring-boot-starter</artifactId>
+			<version>${seata.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>seata-all</artifactId>
+					<groupId>io.seata</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.seata/seata-all -->
+		<dependency>
+			<groupId>io.seata</groupId>
+			<artifactId>seata-all</artifactId>
+			<version>${seata.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- # seata zk连接主要依赖zkclient-->
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.11</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
