@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudtravel.shardingsphere.dao.BSpModelMapper">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.shardingsphere.model.BSpModel">
+    <id column="SP_ID" jdbcType="BIGINT" property="spId" />
+    <result column="TENANT_ID" jdbcType="BIGINT" property="tenantId" />
+    <result column="BIZ_ID" jdbcType="BIGINT" property="bizId" />
+    <result column="SP_NAME" jdbcType="VARCHAR" property="spName" />
+    <result column="REGISTER_DATE" jdbcType="BIGINT" property="registerDate" />
+    <result column="VERSION" jdbcType="BIGINT" property="version" />
+    <result column="DEL_FLG" jdbcType="BIT" property="delFlg" />
+    <result column="ADD_ACTION" jdbcType="VARCHAR" property="addAction" />
+    <result column="ADD_ACCOUNT_ID" jdbcType="BIGINT" property="addAccountId" />
+    <result column="ADD_TERM_IP" jdbcType="VARCHAR" property="addTermIp" />
+    <result column="ADD_DT" jdbcType="BIGINT" property="addDt" />
+    <result column="UPD_ACTION" jdbcType="VARCHAR" property="updAction" />
+    <result column="UPD_ACCOUNT_ID" jdbcType="BIGINT" property="updAccountId" />
+    <result column="UPD_TERM_IP" jdbcType="VARCHAR" property="updTermIp" />
+    <result column="UPD_DT" jdbcType="BIGINT" property="updDt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SP_ID, TENANT_ID, BIZ_ID, SP_NAME, REGISTER_DATE, VERSION, DEL_FLG, ADD_ACTION, ADD_ACCOUNT_ID, 
+    ADD_TERM_IP, ADD_DT, UPD_ACTION, UPD_ACCOUNT_ID, UPD_TERM_IP, UPD_DT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sp
+    where SP_ID = #{spId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_sp
+    where SP_ID = #{spId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cloudtravel.shardingsphere.model.BSpModel">
+    insert into t_sp (SP_ID, TENANT_ID, BIZ_ID, 
+      SP_NAME, REGISTER_DATE, VERSION, 
+      DEL_FLG, ADD_ACTION, ADD_ACCOUNT_ID, 
+      ADD_TERM_IP, ADD_DT, UPD_ACTION, 
+      UPD_ACCOUNT_ID, UPD_TERM_IP, UPD_DT
+      )
+    values (#{spId,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{bizId,jdbcType=BIGINT}, 
+      #{spName,jdbcType=VARCHAR}, #{registerDate,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, 
+      #{delFlg,jdbcType=BIT}, #{addAction,jdbcType=VARCHAR}, #{addAccountId,jdbcType=BIGINT}, 
+      #{addTermIp,jdbcType=VARCHAR}, #{addDt,jdbcType=BIGINT}, #{updAction,jdbcType=VARCHAR}, 
+      #{updAccountId,jdbcType=BIGINT}, #{updTermIp,jdbcType=VARCHAR}, #{updDt,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloudtravel.shardingsphere.model.BSpModel"
+      useGeneratedKeys="true" keyProperty="spId">
+    insert into t_sp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spId != null">
+        SP_ID,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID,
+      </if>
+      <if test="bizId != null">
+        BIZ_ID,
+      </if>
+      <if test="spName != null">
+        SP_NAME,
+      </if>
+      <if test="registerDate != null">
+        REGISTER_DATE,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="delFlg != null">
+        DEL_FLG,
+      </if>
+      <if test="addAction != null">
+        ADD_ACTION,
+      </if>
+      <if test="addAccountId != null">
+        ADD_ACCOUNT_ID,
+      </if>
+      <if test="addTermIp != null">
+        ADD_TERM_IP,
+      </if>
+      <if test="addDt != null">
+        ADD_DT,
+      </if>
+      <if test="updAction != null">
+        UPD_ACTION,
+      </if>
+      <if test="updAccountId != null">
+        UPD_ACCOUNT_ID,
+      </if>
+      <if test="updTermIp != null">
+        UPD_TERM_IP,
+      </if>
+      <if test="updDt != null">
+        UPD_DT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spId != null">
+        #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="bizId != null">
+        #{bizId,jdbcType=BIGINT},
+      </if>
+      <if test="spName != null">
+        #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null">
+        #{registerDate,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="delFlg != null">
+        #{delFlg,jdbcType=BIT},
+      </if>
+      <if test="addAction != null">
+        #{addAction,jdbcType=VARCHAR},
+      </if>
+      <if test="addAccountId != null">
+        #{addAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="addTermIp != null">
+        #{addTermIp,jdbcType=VARCHAR},
+      </if>
+      <if test="addDt != null">
+        #{addDt,jdbcType=BIGINT},
+      </if>
+      <if test="updAction != null">
+        #{updAction,jdbcType=VARCHAR},
+      </if>
+      <if test="updAccountId != null">
+        #{updAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="updTermIp != null">
+        #{updTermIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updDt != null">
+        #{updDt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.shardingsphere.model.BSpModel">
+    update t_sp
+    <set>
+      <if test="tenantId != null">
+        TENANT_ID = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="bizId != null">
+        BIZ_ID = #{bizId,jdbcType=BIGINT},
+      </if>
+      <if test="spName != null">
+        SP_NAME = #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null">
+        REGISTER_DATE = #{registerDate,jdbcType=BIGINT},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="delFlg != null">
+        DEL_FLG = #{delFlg,jdbcType=BIT},
+      </if>
+      <if test="addAction != null">
+        ADD_ACTION = #{addAction,jdbcType=VARCHAR},
+      </if>
+      <if test="addAccountId != null">
+        ADD_ACCOUNT_ID = #{addAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="addTermIp != null">
+        ADD_TERM_IP = #{addTermIp,jdbcType=VARCHAR},
+      </if>
+      <if test="addDt != null">
+        ADD_DT = #{addDt,jdbcType=BIGINT},
+      </if>
+      <if test="updAction != null">
+        UPD_ACTION = #{updAction,jdbcType=VARCHAR},
+      </if>
+      <if test="updAccountId != null">
+        UPD_ACCOUNT_ID = #{updAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="updTermIp != null">
+        UPD_TERM_IP = #{updTermIp,jdbcType=VARCHAR},
+      </if>
+      <if test="updDt != null">
+        UPD_DT = #{updDt,jdbcType=BIGINT},
+      </if>
+    </set>
+    where SP_ID = #{spId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.shardingsphere.model.BSpModel">
+    update t_sp
+    set TENANT_ID = #{tenantId,jdbcType=BIGINT},
+      BIZ_ID = #{bizId,jdbcType=BIGINT},
+      SP_NAME = #{spName,jdbcType=VARCHAR},
+      REGISTER_DATE = #{registerDate,jdbcType=BIGINT},
+      VERSION = #{version,jdbcType=BIGINT},
+      DEL_FLG = #{delFlg,jdbcType=BIT},
+      ADD_ACTION = #{addAction,jdbcType=VARCHAR},
+      ADD_ACCOUNT_ID = #{addAccountId,jdbcType=BIGINT},
+      ADD_TERM_IP = #{addTermIp,jdbcType=VARCHAR},
+      ADD_DT = #{addDt,jdbcType=BIGINT},
+      UPD_ACTION = #{updAction,jdbcType=VARCHAR},
+      UPD_ACCOUNT_ID = #{updAccountId,jdbcType=BIGINT},
+      UPD_TERM_IP = #{updTermIp,jdbcType=VARCHAR},
+      UPD_DT = #{updDt,jdbcType=BIGINT}
+    where SP_ID = #{spId,jdbcType=BIGINT}
+  </update>
+</mapper>

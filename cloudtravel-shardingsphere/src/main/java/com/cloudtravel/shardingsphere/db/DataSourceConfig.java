@@ -21,6 +21,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -29,43 +30,23 @@ import java.util.Properties;
 @MapperScan(basePackages = "com.cloudtravel.shardingsphere" , sqlSessionTemplateRef = "testSqlSessionTemplate")
 public class DataSourceConfig {
 
-
-    @Value("${spring.shardingsphere.sharding.tables.b_user.actual-data-nodes")
-    private String executionActualDataNodes;
-
-    private String executionTable ="b_user";
-
     private String shardDataSource0 ="cloudtravel_consumer1";
     private String shardDataSource1 ="cloudtravel_consumer2";
 
-    private String defaultDataSource="cloudtravel_consumer2";
+    private String defaultDataSource="cloudtravel_consumer1";
 
     @Value("${mybatis.mapper-locations}")
     private String mapperLocations;
 
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer1.username}")
-    private String username1;
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer1.url}")
-    private String url1;
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer1.password}")
-    private String password1;
+    private String exeDatabaseShardingColumn = "TENANT_ID";
 
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer2.username}")
-    private String username2;
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer2.url}")
-    private String url2;
-    @Value("${spring.shardingsphere.datasource.cloudtravel_consumer2.password}")
-    private String password2;
-
-    @Value("${spring.shardingsphere.sharding.tables.wf_core_run_execution.database-strategy.inline.sharding-column:tenant_id_}")
-    private String exeDatabaseShardingColumn;
-    @Value("${spring.shardingsphere.sharding.tables.wf_core_run_execution.table_strategy.complex.shardingColumns:id_}")
-    private String executionShardingColumn;
+    private String executionShardingColumn = "BIZ_ID";
 
     @Autowired
-    private ComplexTableExecutionShardingAlgorithm tableShardingAlgorithmCom;
+    private TableShardingAlgorithm tableShardingAlgorithmCom;
+
     @Autowired
-    private DatabaseShardingAlgorithm preciseModuloDatabaseShardingAlgorithm;
+    private DatabaseShardingAlgorithm databaseShardingAlgorithm;
     /**
      * 设置数据源
      * @return
@@ -75,11 +56,17 @@ public class DataSourceConfig {
     @Bean(name = "shardingDataSource")
     DataSource getShardingDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getBindingTableGroups().add(executionTable);
+
+        // 设置默认的分库策略
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(
+                new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
         //  配置表规则
-        shardingRuleConfig.getTableRuleConfigs().add(getExeTableRuleConfiguration());
-        // 设置默认的分库分表策略
-        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, preciseModuloDatabaseShardingAlgorithm));
+        shardingRuleConfig.getTableRuleConfigs().
+                addAll(Arrays.asList(
+                        getBUserRuleConfiguration() ,
+                        getTSpRuleConfiguration()
+                        )
+                );
         // 设置默认数据库
         shardingRuleConfig.setDefaultDataSourceName(defaultDataSource);
 
@@ -122,23 +109,32 @@ public class DataSourceConfig {
      * 具体表进行分库分表的规则配置
      * @return
      */
-    private TableRuleConfiguration getExeTableRuleConfiguration() {
-        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration(executionTable, executionActualDataNodes);
-        orderTableRuleConfig.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, preciseModuloDatabaseShardingAlgorithm));
+    private TableRuleConfiguration getBUserRuleConfiguration() {
+        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("b_user", "cloudtravel_consumer$->{1..2}.b_user");
+        orderTableRuleConfig.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
+        return orderTableRuleConfig;
+    }
+
+    /**
+     * 具体表进行分库分表的规则配置
+     * @return
+     */
+    private TableRuleConfiguration getTSpRuleConfiguration() {
+        TableRuleConfiguration orderTableRuleConfig=new TableRuleConfiguration("t_sp", "cloudtravel_consumer$->{1..2}.t_sp_$->{0..1}");
+        orderTableRuleConfig.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration(exeDatabaseShardingColumn, databaseShardingAlgorithm));
         orderTableRuleConfig.setTableShardingStrategyConfig(new ComplexShardingStrategyConfiguration(executionShardingColumn,tableShardingAlgorithmCom));
         return orderTableRuleConfig;
     }
 
 
-    @Primary
     @Bean("dataSource1")
-    @ConfigurationProperties(prefix = "spring.shardingsphere.datasource.cloudtravel_consumer1")
+    @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer1")
     public DataSource druidDataSource1() {
         return new DruidDataSource();
     }
 
     @Bean("dataSource2")
-    @ConfigurationProperties(prefix = "spring.shardingsphere.datasource.cloudtravel_consumer2")
+    @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer2")
     public DataSource druidDataSource2() {
         return new DruidDataSource();
     }

@@ -75,7 +75,7 @@
 				<configuration>
 					<verbose>true</verbose>
 					<overwrite>false</overwrite>
-					<configurationFile>D:\code\cloudtravel\cloudtravel-consumer\src\main\resources\mybatis-generator.xml</configurationFile>
+					<configurationFile>D:\cloudtravel\cloudtravel-shardingsphere\src\main\resources\mybatis-generator.xml</configurationFile>
 				</configuration>
 				<dependencies>
 					<dependency>
