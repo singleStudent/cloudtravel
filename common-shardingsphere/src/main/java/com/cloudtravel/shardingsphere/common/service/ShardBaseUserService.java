@@ -1,4 +1,4 @@
-package com.cloudtravel.shardingsphere.service;
+package com.cloudtravel.shardingsphere.common.service;
 
 
 public interface ShardBaseUserService {

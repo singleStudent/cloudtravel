@@ -12,4 +12,7 @@
 
     <dubbo:reference interface="com.cloudtravel.websocket.common.service.ISysSocketService" id="sysSocketService"
                      check="false" version="1.0"/>
+
+    <dubbo:reference interface="com.cloudtravel.shardingsphere.common.service.ShardBaseUserService" id="shardBaseUserService"
+                     check="false" version="1.0"/>
 </beans>

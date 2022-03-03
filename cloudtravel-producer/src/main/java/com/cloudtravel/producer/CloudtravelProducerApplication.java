@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class , DubboAutoConfiguration.class})
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
 @ImportResource(locations={"classpath:META-INF/*.xml"})
 @ComponentScan({"com.cloudtravel.producer" , "com.cloudtravel.common.redis"})

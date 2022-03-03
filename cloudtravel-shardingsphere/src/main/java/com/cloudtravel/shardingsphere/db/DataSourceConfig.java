@@ -14,12 +14,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
@@ -43,11 +42,8 @@ public class DataSourceConfig {
     @Autowired
     DataSourceConfigBase dataSourceConfigBase;
 
-    @Value("${seata.application-id}")
-    public String SEATA_APPLICATION_ID;
-
-    @Value("${seata.tx-service-group}")
-    public String TX_SERVICE_GROUP;
+    @Autowired
+    Environment environment;
 
     /**
      * 设置数据源
@@ -79,11 +75,6 @@ public class DataSourceConfig {
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
     }
 
-    //for seata
-    @Bean("dataSourceProxy")
-    public DataSourceProxy dataSourceProxy(@Qualifier("shardingDataSource") DataSource dataSource) {
-        return new DataSourceProxy(dataSource);
-    }
 
     /**
      * 获取sqlSessionFactory实例
@@ -91,7 +82,7 @@ public class DataSourceConfig {
      * @return
      * @throws Exception
      */
-    @Bean
+    @Bean("SqlSessionFactory")
     @Primary
     public SqlSessionFactory sqlSessionFactory(@Qualifier("shardingDataSource") DataSource shardingDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
@@ -102,7 +93,7 @@ public class DataSourceConfig {
 
     @Bean
     @Primary
-    public SqlSessionTemplate testSqlSessionTemplate(SqlSessionFactory sqlSessionFactory)  {
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("SqlSessionFactory")SqlSessionFactory sqlSessionFactory)  {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
@@ -112,7 +103,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean
-    public DataSourceTransactionManager transactitonManager(DataSource shardingDataSource) {
+    public DataSourceTransactionManager transactitonManager(@Qualifier("shardingDataSource") DataSource shardingDataSource) {
         return new DataSourceTransactionManager(shardingDataSource);
     }
 
@@ -155,16 +146,22 @@ public class DataSourceConfig {
     }
 
 
-    @Bean("dataSource1")
-    @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer1")
     public DataSource druidDataSource1() {
-        return new DruidDataSource();
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(environment.getProperty("datasource.cloudtravel-consumer1.url"));
+        dataSource.setUsername(environment.getProperty("datasource.cloudtravel-consumer1.username"));
+        dataSource.setPassword(environment.getProperty("datasource.cloudtravel-consumer1.password"));
+        dataSource.setDriverClassName(environment.getProperty("datasource.cloudtravel-consumer1.driver-class-name"));
+        return dataSource;
     }
 
-    @Bean("dataSource2")
-    @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer2")
     public DataSource druidDataSource2() {
-        return new DruidDataSource();
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(environment.getProperty("datasource.cloudtravel-consumer2.url"));
+        dataSource.setUsername(environment.getProperty("datasource.cloudtravel-consumer2.username"));
+        dataSource.setPassword(environment.getProperty("datasource.cloudtravel-consumer2.password"));
+        dataSource.setDriverClassName(environment.getProperty("datasource.cloudtravel-consumer2.driver-class-name"));
+        return dataSource;
     }
 
     /**
@@ -176,10 +173,5 @@ public class DataSourceConfig {
         result.put(dataSourceConfigBase.getDatasourceName1(),druidDataSource1());
         result.put(dataSourceConfigBase.getDatasourceName2(), druidDataSource2());
         return result;
-    }
-
-    @Bean("ShardGlobalTransactionScanner")
-    public GlobalTransactionScanner globalTransactionScanner() {
-        return new GlobalTransactionScanner(SEATA_APPLICATION_ID , TX_SERVICE_GROUP);
     }
 }

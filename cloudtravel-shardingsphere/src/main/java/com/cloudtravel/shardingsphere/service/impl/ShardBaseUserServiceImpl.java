@@ -1,20 +1,25 @@
 package com.cloudtravel.shardingsphere.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import com.cloudtravel.shardingsphere.common.service.ShardBaseUserService;
 import com.cloudtravel.shardingsphere.dao.TUserModelMapper;
 import com.cloudtravel.shardingsphere.model.TUserModel;
-import com.cloudtravel.shardingsphere.service.ShardBaseUserService;
-import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.shardingsphere.transaction.annotation.ShardingTransactionType;
+import org.apache.shardingsphere.transaction.core.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service(interfaceClass = ShardBaseUserService.class , owner = "cloudtravel" , version = "1.0")
+@Service
 public class ShardBaseUserServiceImpl implements ShardBaseUserService {
 
     @Autowired
     TUserModelMapper userModelMapper;
 
+
     @Override
-    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+//    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+    @Transactional
+    @ShardingTransactionType(TransactionType.BASE)
     public Long addUser(Long tenantId) {
         TUserModel model = new TUserModel();
         model.setTenantId(tenantId.toString());
@@ -24,6 +29,7 @@ public class ShardBaseUserServiceImpl implements ShardBaseUserService {
         model.setIdNumber("231");
         model.setIdNumType(0);
         userModelMapper.insertSelective(model);
+//        throw new RuntimeException("test");
         return model.getId();
     }
 }

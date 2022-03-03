@@ -6,6 +6,7 @@ import com.cloudtravel.producer.common.model.BaseUserModel;
 import com.cloudtravel.producer.common.service.IBaseUserService;
 import com.cloudtravel.common.util.RandomHelper;
 import com.cloudtravel.consumer.dao.IBaseSpDao;
+import com.cloudtravel.shardingsphere.common.service.ShardBaseUserService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,6 +23,9 @@ public class BaseSpServiceImpl implements IBaseSpService {
 
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    ShardBaseUserService shardBaseUserService;
 
     private static Integer TEMPLATE_COUNT = 1;
 
@@ -46,8 +50,9 @@ public class BaseSpServiceImpl implements IBaseSpService {
         Long spSeqId = this.addSp(templateId , spModel);
         String userSeqId = userService.insertUser(userModel);
 
-        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId;
-//        throw new RuntimeException("test");
+        Long shardId = shardBaseUserService.addUser(1L);
+//        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId + " &&& shardingId = " + shardId;
+        throw new RuntimeException("test");
     }
 
     @Override
