@@ -8,4 +8,4 @@ springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticS
 
 1. 本地环境启动 : zookeeper -> kafka -> seata
 
-2. 服务启动顺序 : cloudtravel-producer -> cloudtravel-kafka -> cloudtravel-websocket -> cloudtravel-consumer
+2. 服务启动顺序 : cloudtravel-producer -> cloudtravel-kafka -> cloudtravel-websocket -> cloudtravel-shardingsphere -> cloudtravel-consumer
