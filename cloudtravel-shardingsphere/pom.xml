@@ -58,6 +58,7 @@
 			<artifactId>sharding-jdbc-core</artifactId>
 			<version>4.1.1</version>
 		</dependency>
+		<!-- 引入sharding对SeaTa分布式事务管理的支持	-->
 		<dependency>
 			<groupId>org.apache.shardingsphere</groupId>
 			<artifactId>sharding-transaction-base-seata-at</artifactId>

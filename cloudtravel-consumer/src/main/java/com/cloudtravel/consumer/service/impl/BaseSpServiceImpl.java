@@ -9,7 +9,6 @@ import com.cloudtravel.consumer.dao.IBaseSpDao;
 import com.cloudtravel.shardingsphere.common.service.ShardBaseUserService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +19,6 @@ public class BaseSpServiceImpl implements IBaseSpService {
 
     @Autowired
     IBaseSpDao baseSpDao;
-
-    @Autowired
-    RedisTemplate redisTemplate;
 
     @Autowired
     ShardBaseUserService shardBaseUserService;
