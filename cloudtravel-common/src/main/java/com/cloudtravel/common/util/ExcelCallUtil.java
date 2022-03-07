@@ -1,10 +1,5 @@
 package com.cloudtravel.common.util;
 
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 public class ExcelCallUtil extends AbstractThreadCall{
 
 

@@ -14,30 +14,4 @@
 	<name>common-kafka</name>
 	<description>common for kafka</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.cloudtravel.common</groupId>
-			<artifactId>cloudtravel-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
