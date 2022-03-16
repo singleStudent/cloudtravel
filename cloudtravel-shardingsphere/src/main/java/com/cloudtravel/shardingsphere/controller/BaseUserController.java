@@ -27,6 +27,8 @@ public class BaseUserController {
         model.setIdNumber("231");
         model.setIdNumType(0);
         userModelMapper.insertSelective(model);
-        return model.getId();
+        throw new RuntimeException("test");
     }
+
+
 }
