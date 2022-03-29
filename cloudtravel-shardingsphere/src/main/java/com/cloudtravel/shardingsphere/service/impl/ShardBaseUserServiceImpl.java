@@ -17,9 +17,6 @@ public class ShardBaseUserServiceImpl implements ShardBaseUserService {
 
 
     @Override
-    @Transactional //引入事务支持
-    @ShardingTransactionType(TransactionType.BASE)//引入分布式柔性事务支持,不需分布式事务的话只用@Transactional即可
-//    @GlobalTransactional(name = "sp-user-seata-group"  , rollbackFor = Exception.class)
     public Long addUser(Long tenantId) {
         TUserModel model = new TUserModel();
         model.setTenantId(tenantId.toString());

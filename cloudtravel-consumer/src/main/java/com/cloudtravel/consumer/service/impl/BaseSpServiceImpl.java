@@ -9,13 +9,15 @@ import com.cloudtravel.consumer.dao.IBaseSpDao;
 import com.cloudtravel.shardingsphere.common.service.ShardBaseUserService;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BaseSpServiceImpl implements IBaseSpService {
 
     @Autowired
-    IBaseUserService userService;
+    @Qualifier("baseUserService")
+    IBaseUserService baseUserService;
 
     @Autowired
     IBaseSpDao baseSpDao;
@@ -26,7 +28,7 @@ public class BaseSpServiceImpl implements IBaseSpService {
     private static Integer TEMPLATE_COUNT = 1;
 
     @Override
-    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+//    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
     public String testAddUserAndSp() {
 
         String templateId = RandomHelper.getRandomStr(10);
@@ -44,7 +46,7 @@ public class BaseSpServiceImpl implements IBaseSpService {
         spModel.setFounderAccountId(99999L);
         spModel.setSpName("云寓公寓");
         Long spSeqId = this.addSp(templateId , spModel);
-        String userSeqId = userService.insertUser(userModel);
+        String userSeqId = baseUserService.insertUser(userModel);
 
         Long shardId = shardBaseUserService.addUser(1L);
 //        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId + " &&& shardingId = " + shardId;
