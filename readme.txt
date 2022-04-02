@@ -2,7 +2,7 @@
 框架实战
 springBoot + dubbo + zookeeper + webSocket + kafka + redis + rocketMq + elasticSearch + apache.sharding sphere
 
-代码同步github + gitee
+代码同步github + gitee平台
 
 优化程序启动内容 + dubbo接口分离 + 消费端模块socket通讯Ajax测试
 
