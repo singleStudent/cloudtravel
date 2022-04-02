@@ -19,6 +19,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -29,6 +31,7 @@ import java.util.Properties;
 @Configuration
 @MapperScan(basePackages = "com.cloudtravel.shardingsphere.dao" , sqlSessionTemplateRef = "testSqlSessionTemplate")
 @Order(11)
+@EnableTransactionManagement
 public class DataSourceConfig {
 
     @Autowired
@@ -80,7 +83,7 @@ public class DataSourceConfig {
      * @return
      * @throws Exception
      */
-    @Bean("SqlSessionFactory")
+    @Bean("sqlSessionFactory")
     @Primary
     public SqlSessionFactory sqlSessionFactory(@Qualifier("shardingDataSource") DataSource shardingDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
@@ -91,7 +94,7 @@ public class DataSourceConfig {
 
     @Bean
     @Primary
-    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("SqlSessionFactory")SqlSessionFactory sqlSessionFactory)  {
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("sqlSessionFactory")SqlSessionFactory sqlSessionFactory)  {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

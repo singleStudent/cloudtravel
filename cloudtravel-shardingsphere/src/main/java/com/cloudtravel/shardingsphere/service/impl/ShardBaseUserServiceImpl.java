@@ -17,6 +17,8 @@ public class ShardBaseUserServiceImpl implements ShardBaseUserService {
 
 
     @Override
+//    @Transactional
+//    @ShardingTransactionType(TransactionType.BASE)
     public Long addUser(Long tenantId) {
         TUserModel model = new TUserModel();
         model.setTenantId(tenantId.toString());
