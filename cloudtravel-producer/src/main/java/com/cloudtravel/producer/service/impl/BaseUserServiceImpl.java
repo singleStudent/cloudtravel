@@ -14,10 +14,9 @@ public class BaseUserServiceImpl implements IBaseUserService {
     IBaseUserDao IBaseUserModelMapper;
 
     @Override
-//    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
     public String insertUser(BaseUserModel userModel) {
-        int rows = IBaseUserModelMapper.insertSelective(userModel);
-//        throw new RuntimeException("test");
+        IBaseUserModelMapper.insertSelective(userModel);
         return userModel.getId().toString();
     }
 }

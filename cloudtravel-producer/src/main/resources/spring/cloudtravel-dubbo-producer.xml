@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-    <context:component-scan base-package="com.cloudtravel.producer"/>
-
-    <dubbo:application name="${config.dubbo.application.name}" owner="cloudtravel" organization="dubbox" />
-
-    <dubbo:registry protocol="${config.dubbo.registry.protocol}" address="${config.dubbo.registry.address}" timeout="6000"/>
-
-    <dubbo:protocol name="${config.dubbo.protocol.name}" port="${config.dubbo.protocol.port}" payload="20971520"/>
 
     <bean id="baseUserService" class="com.cloudtravel.producer.service.impl.BaseUserServiceImpl"/>
     <dubbo:service interface="com.cloudtravel.producer.common.service.IBaseUserService" ref="baseUserService"

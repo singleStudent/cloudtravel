@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class , DubboAutoConfiguration.class})
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
-@ImportResource(locations={"classpath:META-INF/*.xml"})
+@ImportResource(locations={"classpath:spring/*.xml"})
 @ComponentScan({"com.cloudtravel.producer" , "com.cloudtravel.common.redis"})
 public class CloudtravelProducerApplication {
 

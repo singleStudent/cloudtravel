@@ -70,22 +70,4 @@ public class AssembleUtil {
 		}
 		return set;
 	}
-
-	/**
-	 *Author:Jack
-	 *Time:2017年9月13日下午3:04:25
-	 *@param args
-	 *Return:void
-	 *Description:测试方法
-	 */
-	public static void main(String[] args) {
-		    
-		    String[] sourceArr = new String[] { "1", "2", "3", "4", "5","6","7" };
-	        String[] resultArr = getAssemble(sourceArr, 3);
-	        System.out.println("累计组合："+resultArr.length+","+Arrays.toString(resultArr));
-	        
-	        String sourceStr = "1,2,3,4,5,6,7";
-	        String[] resultArr2 = getAssemble(sourceStr, 3);
-	        System.out.println("累计组合："+resultArr2.length+","+Arrays.toString(resultArr2));
-	}
 }

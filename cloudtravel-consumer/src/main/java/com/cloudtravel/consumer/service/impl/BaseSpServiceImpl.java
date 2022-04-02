@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class BaseSpServiceImpl implements IBaseSpService {
 
     @Autowired
-    @Qualifier("baseUserService")
     IBaseUserService baseUserService;
 
     @Autowired
@@ -28,7 +27,7 @@ public class BaseSpServiceImpl implements IBaseSpService {
     private static Integer TEMPLATE_COUNT = 1;
 
     @Override
-//    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
     public String testAddUserAndSp() {
 
         String templateId = RandomHelper.getRandomStr(10);
@@ -48,9 +47,8 @@ public class BaseSpServiceImpl implements IBaseSpService {
         Long spSeqId = this.addSp(templateId , spModel);
         String userSeqId = baseUserService.insertUser(userModel);
 
-        Long shardId = shardBaseUserService.addUser(1L);
-//        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId + " &&& shardingId = " + shardId;
-        throw new RuntimeException("test");
+//        Long shardId = shardBaseUserService.addUser(1L);
+        return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId + " &&& shardingId = " + -1;
     }
 
     @Override
