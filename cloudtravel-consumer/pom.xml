@@ -27,8 +27,8 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.cloudtravel.common.producer</groupId>
-			<artifactId>common-producer</artifactId>
+			<groupId>com.cloudtravel.producer</groupId>
+			<artifactId>cloudtravel-producer</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

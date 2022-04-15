@@ -2,8 +2,8 @@ package com.cloudtravel.producer.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.cloudtravel.producer.common.service.IBaseUserService;
-import com.cloudtravel.producer.common.model.BaseUserModel;
+import com.cloudtravel.producer.service.IBaseUserService;
+import com.cloudtravel.producer.model.BaseUserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,7 @@
 package com.cloudtravel.shardingsphere.common.service;
 
 
-public interface ShardBaseUserService {
+public interface IShardBaseUserService {
 
     public Long addUser(Long tenantId);
 }

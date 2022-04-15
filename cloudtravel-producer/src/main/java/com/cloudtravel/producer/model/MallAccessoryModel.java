@@ -1,4 +1,4 @@
-package com.cloudtravel.producer.common.model;
+package com.cloudtravel.producer.model;
 
 import java.util.Date;
 

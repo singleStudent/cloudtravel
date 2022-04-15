@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudtravel.producer.dao.IBaseUserDao">
-  <resultMap id="BaseResultMap" type="com.cloudtravel.producer.common.model.BaseUserModel">
+  <resultMap id="BaseResultMap" type="com.cloudtravel.producer.model.BaseUserModel">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="biz_id" jdbcType="VARCHAR" property="bizId" />
     <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
@@ -26,7 +26,7 @@
     delete from b_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cloudtravel.producer.common.model.BaseUserModel">
+  <insert id="insert" parameterType="com.cloudtravel.producer.model.BaseUserModel">
     insert into b_user (id, biz_id, tenant_id, 
       user_type, user_name, id_number, 
       id_num_type, gmt_create, gmt_update
@@ -36,7 +36,7 @@
       #{idNumType,jdbcType=SMALLINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.producer.common.model.BaseUserModel"
+  <insert id="insertSelective" parameterType="com.cloudtravel.producer.model.BaseUserModel"
           useGeneratedKeys="true" keyProperty="id">
     insert into b_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -98,7 +98,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.producer.common.model.BaseUserModel">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudtravel.producer.model.BaseUserModel">
     update b_user
     <set>
       <if test="bizId != null">
@@ -128,7 +128,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.producer.common.model.BaseUserModel">
+  <update id="updateByPrimaryKey" parameterType="com.cloudtravel.producer.model.BaseUserModel">
     update b_user
     set biz_id = #{bizId,jdbcType=VARCHAR},
       tenant_id = #{tenantId,jdbcType=VARCHAR},
@@ -140,4 +140,10 @@
       gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from b_user
+  </select>
 </mapper>

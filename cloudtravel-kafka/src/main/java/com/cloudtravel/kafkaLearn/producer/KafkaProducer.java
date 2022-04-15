@@ -1,6 +1,7 @@
 package com.cloudtravel.kafkaLearn.producer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -58,7 +59,7 @@ public class KafkaProducer {
     }
 
     /**
-     * 带回调方法的消息发送1 . 回调方法1->Java8的流式回调
+     * 带事务的消息发送
      * @param message
      */
     @GetMapping("/kafkaProducer/send1WithTx/{topic}/{message}")
@@ -73,6 +74,7 @@ public class KafkaProducer {
             });
             throw new RuntimeException("test");
         });
+        DefaultKafkaProducerFactory defaultKafkaProducerFactory =  (DefaultKafkaProducerFactory)kafkaTemplate.getProducerFactory();
 
     }
 

@@ -43,11 +43,9 @@
 	<modules>
 		<module>cloudtravel-common</module>
         <module>cloudtravel-rocketmq</module>
-        <module>common-producer</module>
         <module>cloudtravel-producer</module>
         <module>common-consumer</module>
         <module>cloudtravel-consumer</module>
-        <module>cloudtravel-elesticsearch</module>
         <module>common-websocket</module>
         <module>cloudtravel-websocket</module>
         <module>common-kafka</module>

@@ -1,7 +1,7 @@
 package com.cloudtravel.common.util;
 
 import org.junit.Test;
-
+import java.util.*;
 import java.util.concurrent.*;
 
 public class ConsistentHashTest {
@@ -21,4 +21,16 @@ public class ConsistentHashTest {
         System.out.println("Main end");
     }
 
+    public static void main(String[] args) {
+        Queue<Integer> arr = new LinkedBlockingQueue<>();
+        arr.add(1);
+        arr.add(2);
+        arr.add(3);
+        arr.add(4);
+        System.out.println("poll()" + arr.poll());//返回并删除头
+        System.out.println("peek()" + arr.peek());//只返回头
+        System.out.println("offer()" + arr.offer(2));//尾部插入
+        System.out.println("element()" + arr.element());//返回头,为空抛异常
+        System.out.println(arr);
+    }
 }

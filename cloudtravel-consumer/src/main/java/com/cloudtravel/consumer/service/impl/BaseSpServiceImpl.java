@@ -2,14 +2,12 @@ package com.cloudtravel.consumer.service.impl;
 
 import com.cloudtravel.consumer.common.model.BaseSpModel;
 import com.cloudtravel.consumer.common.service.IBaseSpService;
-import com.cloudtravel.producer.common.model.BaseUserModel;
-import com.cloudtravel.producer.common.service.IBaseUserService;
+import com.cloudtravel.producer.model.BaseUserModel;
 import com.cloudtravel.common.util.RandomHelper;
 import com.cloudtravel.consumer.dao.IBaseSpDao;
-import com.cloudtravel.shardingsphere.common.service.ShardBaseUserService;
-import io.seata.spring.annotation.GlobalTransactional;
+import com.cloudtravel.producer.service.IBaseUserService;
+import com.cloudtravel.shardingsphere.common.service.IShardBaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,12 +20,12 @@ public class BaseSpServiceImpl implements IBaseSpService {
     IBaseSpDao baseSpDao;
 
     @Autowired
-    ShardBaseUserService shardBaseUserService;
+    IShardBaseUserService shardBaseUserService;
 
     private static Integer TEMPLATE_COUNT = 1;
 
     @Override
-    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
+//    @GlobalTransactional(name = "sp-user-seata-group" , rollbackFor = Exception.class)
     public String testAddUserAndSp() {
 
         String templateId = RandomHelper.getRandomStr(10);
@@ -47,7 +45,7 @@ public class BaseSpServiceImpl implements IBaseSpService {
         Long spSeqId = this.addSp(templateId , spModel);
         String userSeqId = baseUserService.insertUser(userModel);
 
-//        Long shardId = shardBaseUserService.addUser(1L);
+        Long shardId = shardBaseUserService.addUser(1L);
         return "userSeqId = " + userSeqId + " &&& spSeqId = " + spSeqId + " &&& shardingId = " + -1;
     }
 

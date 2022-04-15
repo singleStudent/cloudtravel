@@ -1,7 +1,9 @@
 package com.cloudtravel.producer.dao;
 
-import com.cloudtravel.producer.common.model.BaseUserModel;
+import com.cloudtravel.producer.model.BaseUserModel;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface IBaseUserDao {
@@ -16,4 +18,6 @@ public interface IBaseUserDao {
     int updateByPrimaryKeySelective(BaseUserModel record);
 
     int updateByPrimaryKey(BaseUserModel record);
+
+    List<BaseUserModel> selectAll();
 }

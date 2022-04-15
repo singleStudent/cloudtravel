@@ -2,9 +2,12 @@ package com.cloudtravel.kafkaLearn.consumer;
 
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -13,6 +16,9 @@ import java.util.List;
  */
 @Component
 public class KafkaConsumer {
+
+    @Autowired
+    KafkaTemplate kafkaTemplate;
 
     @KafkaListener(id = "testListener" , topics = {"test"})
     public void onMessageWithTopicTest(List<ConsumerRecord<? , ?>> records) {
@@ -34,7 +40,7 @@ public class KafkaConsumer {
     public void onMessageWithTopicTest2(List<ConsumerRecord<? , ?>> records) {
         records.stream().forEach(record->{
                     System.out.println("test2："+ record.topic()+"-"+record.partition()+"-"+record.value());
-                }
+        }
         );
     }
 }

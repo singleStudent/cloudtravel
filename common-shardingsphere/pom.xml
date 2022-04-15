@@ -13,5 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>common-shardingsphere</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
 
 </project>

@@ -8,7 +8,7 @@
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <bean id="shardBaseUserService" class="com.cloudtravel.shardingsphere.service.impl.ShardBaseUserServiceImpl"/>
-    <dubbo:service interface="com.cloudtravel.shardingsphere.common.service.ShardBaseUserService" ref="shardBaseUserService"
-                   protocol="dubbo" retries="0" timeout="6000" executes="150" scope="remote" version="1.0"/>
+    <dubbo:service interface="com.cloudtravel.shardingsphere.common.service.IShardBaseUserService" ref="shardBaseUserService"
+                   protocol="dubbo" retries="0" timeout="6000" executes="150" version="1.0"/>
 
 </beans>

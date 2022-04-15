@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-    <context:component-scan base-package="com.cloudtravel.shardingsphere"/>
+    <context:component-scan base-package="dubbo.scan.base-packages"/>
 
     <dubbo:application name="${dubbo.application.name}" owner="cloudtravel" organization="dubbox" />
 

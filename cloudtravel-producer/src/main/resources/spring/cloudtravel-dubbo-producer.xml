@@ -8,7 +8,7 @@
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <bean id="baseUserService" class="com.cloudtravel.producer.service.impl.BaseUserServiceImpl"/>
-    <dubbo:service interface="com.cloudtravel.producer.common.service.IBaseUserService" ref="baseUserService"
+    <dubbo:service interface="com.cloudtravel.producer.service.IBaseUserService" ref="baseUserService"
                    protocol="dubbo" retries="0" timeout="6000" executes="150" scope="remote" version="1.0" generic="true"/>
 
 
