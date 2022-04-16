@@ -14,10 +14,9 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Document(indexName = "user",indexStoreType = "test")
+@AllArgsConstructor // lombok 包下 : 全参构造器
+@NoArgsConstructor // lombok 包下 : 无参构造器
+@Document(indexName = "user") // indexName只允许小写
 public class BaseUserModel implements Serializable {
 
     private static final long serialVersionUID = 8283483377785895360L;
