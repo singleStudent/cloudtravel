@@ -6,7 +6,6 @@ import com.cloudtravel.producer.model.BaseUserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -34,11 +33,19 @@ public class EsTestController {
         return list;
     }
 
-    @PostMapping
+    @GetMapping("deleteEs")
     public String delete(@RequestParam Long id) {
-        baseUserDao.deleteByPrimaryKey(id);
         //同步
-        baseUserEsDao.deleteById(id);
+        if(id > 0) {
+            baseUserEsDao.deleteById(id);
+        }else {
+            baseUserEsDao.deleteAll();
+        }
         return "1";
+    }
+
+    @GetMapping("selectByUserName")
+    public Object selectByName(@RequestParam String userName) {
+        return baseUserEsDao.findByUserName(userName);
     }
 }
