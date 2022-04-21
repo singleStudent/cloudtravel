@@ -16,7 +16,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor // lombok 包下 : 全参构造器
 @NoArgsConstructor // lombok 包下 : 无参构造器
-@Document(indexName = "user" , indexStoreType = "spUser" , refreshInterval = "10s") // indexName只允许小写
+@Document(indexName = "user" , indexStoreType = "spUser" , refreshInterval = "10s" , shards = 1 , replicas = 1) // indexName只允许小写
 public class BaseUserModel implements Serializable {
 
     private static final long serialVersionUID = 8283483377785895360L;
