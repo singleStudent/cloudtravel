@@ -52,6 +52,7 @@
         <module>cloudtravel-kafka</module>
         <module>cloudtravel-shardingsphere</module>
         <module>common-shardingsphere</module>
+        <module>cloudtravel-db</module>
     </modules>
 
     <dependencies>
