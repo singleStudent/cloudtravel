@@ -1,5 +1,6 @@
 package com.cloudtravel.common.util;
 
+import com.alibaba.fastjson.JSON;
 import com.cloudtravel.common.model.OCRResult;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.util.ImageHelper;
@@ -15,7 +16,7 @@ public class OCRUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(OCRUtil.class);
 
     /** 训练库地址 */
-    private static final String TESSDATA_DEFAULT = "D:\\work\\tessdata-master";
+    private static final String TESSDATA_DEFAULT = "D:\\software\\ocr\\jTessBoxEditor\\tesseract-ocr\\tessdata";
 
     /** 默认为中文识别 */
     private static final String LANGUAGE_DEFAULT = "chi_sim";
@@ -38,7 +39,7 @@ public class OCRUtil {
                     textImage.getHeight() * 2);
             textImage = ImageHelper.convertImageToBinary(textImage);
             Tesseract tesseract = new Tesseract();
-            tesseract.setDatapath(tessData);
+            tesseract.setDatapath(TESSDATA_DEFAULT);
             tesseract.setLanguage(language);
             tesseract.setTessVariable("user_defined_dpi", "70");
             String res = tesseract.doOCR(textImage);
@@ -59,5 +60,10 @@ public class OCRUtil {
             throw new RuntimeException(ERROR_BASE + "file is now exists ,filePath = " + filePath);
         }
         return readImage(file , tessData , language);
+    }
+
+    public static void main(String[] args) {
+        OCRResult ocrResult =  OCRUtil.readImage("D:/1650614487(1).png" , TESSDATA_DEFAULT, LANGUAGE_DEFAULT);
+        System.out.println(JSON.toJSONString(ocrResult));
     }
 }

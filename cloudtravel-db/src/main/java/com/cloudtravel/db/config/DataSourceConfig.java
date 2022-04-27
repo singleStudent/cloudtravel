@@ -1,9 +1,9 @@
 package com.cloudtravel.db.config;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,23 +16,24 @@ import javax.sql.DataSource;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
+@MapperScan(basePackages = "com.cloudtravel.db.dao" , sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
 
     public static final ConcurrentHashMap<Object , Object> dataSourceMap = new ConcurrentHashMap<>();
 
     @Value("${mybatis.mapper-locations}")
-    private static String MAPPER_LOCATIONS;
+    private String MAPPER_LOCATIONS;
 
     @Bean("cloudtravel_consumer1")
     @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer1")
     public DataSource getCloudTravelDb1() {
-        return DruidDataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     @Bean("cloudtravel_consumer2")
     @ConfigurationProperties(prefix = "datasource.cloudtravel-consumer2")
     public DataSource getCloudTravelDb2() {
-        return DruidDataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     @Bean(name = "dynamicDataSource")
@@ -55,14 +56,6 @@ public class DataSourceConfig {
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATIONS));
         sqlSessionFactoryBean.setTransactionFactory(new DynamicDataSourceTransactionFactory());
         return sqlSessionFactoryBean.getObject();
-    }
-
-    @Bean("mapperScannerConfigurer")
-    public MapperScannerConfigurer mapperScannerConfigurer(@Qualifier("sqlSessionFactory")SqlSessionFactory sqlSessionFactory) {
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("com.cloudtravel.db.dao");
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        return mapperScannerConfigurer;
     }
 
     @Bean("jdbcTemplate")
