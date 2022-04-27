@@ -37,4 +37,8 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM tb
+  </select>
 </mapper>

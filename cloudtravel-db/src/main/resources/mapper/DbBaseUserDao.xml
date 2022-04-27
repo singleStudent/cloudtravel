@@ -36,7 +36,8 @@
       #{idNumType,jdbcType=SMALLINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cloudtravel.db.model.DbBaseUserModel">
+  <insert id="insertSelective" parameterType="com.cloudtravel.db.model.DbBaseUserModel"
+      useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into b_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

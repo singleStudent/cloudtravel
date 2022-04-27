@@ -8,12 +8,9 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -33,7 +30,7 @@ public class DynamicDataSourceTransaction implements Transaction{
     private DataSourceEnums mainDataSourceKey;
 
     /** 线程内的数据库连接 */
-    private static ThreadLocal<List<Connection>> threadConnection = new ThreadLocal<>();
+    private static ThreadLocal<ConcurrentHashMap<DataSourceEnums , Connection>> threadConnection = new ThreadLocal<>();
 
     private static ConcurrentHashMap<Object , Object> dataSourceMap = DataSourceConfig.dataSourceMap;
 
@@ -43,15 +40,11 @@ public class DynamicDataSourceTransaction implements Transaction{
     /** 当前线程是否自动提交 */
     private boolean autoCommit;
 
-    /** 是否已经都提交或者回滚完毕 */
-    private boolean commitOrRollbackDone;
-
     public DynamicDataSourceTransaction(DataSource dataSource) {
         Assert.notNull(dataSource, "No DataSource specified");
         this.dataSource = dataSource;
-        List<Connection> connections = threadConnection.get();
-        if(CollectionUtils.isEmpty(connections)) {
-            threadConnection.set(new ArrayList<>());
+        if(CollectionUtils.isEmpty(threadConnection.get())) {
+            threadConnection.set(new ConcurrentHashMap<DataSourceEnums , Connection>());
         }
         mainDataSourceKey = DataSourceContext.getCurrentDataSourceType();
     }
@@ -66,17 +59,16 @@ public class DynamicDataSourceTransaction implements Transaction{
                 this.mainConnection = DataSourceUtils.getConnection(this.dataSource);
                 this.autoCommit = this.mainConnection.getAutoCommit();
                 this.isConnectionTransactional = DataSourceUtils.isConnectionTransactional(this.mainConnection , this.dataSource);
-                LOGGER.info("Current dataSource connection message , [{}] will {} be managed by spring" , this.mainConnection , this.isConnectionTransactional);
                 this.mainDataSourceKey = dataSourceKeyNow;
                 return this.mainConnection;
             }
         }else {
-            DataSource dataSource = (DataSource)dataSourceMap.get(dataSourceKeyNow);
-            Connection connection = DataSourceUtils.getConnection(dataSource);
-            List<Connection> threadConnectionList = null;
-            if(!(threadConnectionList = threadConnection.get()).contains(connection)) {
-                threadConnectionList.add(connection);
-                threadConnection.set(threadConnectionList);
+            Connection connection = null;
+            if(!threadConnection.get().contains(dataSourceKeyNow)) {
+                connection = DataSourceUtils.getConnection(dataSource);
+                ConcurrentHashMap<DataSourceEnums , Connection> concurrentHashMap = threadConnection.get();
+                concurrentHashMap.put(dataSourceKeyNow , connection);
+                threadConnection.set(concurrentHashMap);
             }
             return connection;
         }
@@ -89,14 +81,13 @@ public class DynamicDataSourceTransaction implements Transaction{
             this.mainConnection.commit();
         }
         if(null != threadConnection && !CollectionUtils.isEmpty(threadConnection.get())) {
-            for (Connection connection : threadConnection.get()) {
+            for (Connection connection : threadConnection.get().values()) {
                 if(!connection.isClosed() && !connection.getAutoCommit()) {
                     LOGGER.info("Commit JDBC CONNECTION : [{}]" , connection);
                     connection.commit();
                 }
             }
         }
-        commitOrRollbackDone = true;
     }
 
     @Override
@@ -106,25 +97,23 @@ public class DynamicDataSourceTransaction implements Transaction{
             this.mainConnection.rollback();
         }
         if(null != threadConnection && !CollectionUtils.isEmpty(threadConnection.get())) {
-            for (Connection connection : threadConnection.get()) {
+            for (Connection connection : threadConnection.get().values()) {
                 if(!connection.isClosed() && !connection.getAutoCommit()) {
                     LOGGER.info("Rollback JDBC CONNECTION : [{}]" , connection);
                     connection.rollback();
                 }
             }
         }
-        commitOrRollbackDone = true;
     }
 
     @Override
     public void close() throws SQLException {
-        Assert.isTrue(commitOrRollbackDone , "Current thread has other connection is working!");
         if(null != this.mainConnection && !this.mainConnection.isClosed()) {
             LOGGER.info("Close JDBC CONNECTION : [{}]" , this.mainConnection);
             DataSourceUtils.releaseConnection(this.mainConnection , dataSource);
         }
         if(null != threadConnection && !CollectionUtils.isEmpty(threadConnection.get())) {
-            for (Connection connection : threadConnection.get()) {
+            for (Connection connection : threadConnection.get().values()) {
                 if(!connection.isClosed()) {
                     connection.close();
                 }
