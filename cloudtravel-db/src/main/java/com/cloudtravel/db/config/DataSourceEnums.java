@@ -8,5 +8,5 @@ public enum DataSourceEnums {
     /**  */
     CLOUDTRAVEL_CONSUMER1,
 
-    cloudtravel_consumer2
+    CLOUDTRAVEL_CONSUMER2
 }

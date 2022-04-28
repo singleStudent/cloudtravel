@@ -2,6 +2,8 @@ package com.cloudtravel.db.service.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cloudtravel.db.config.DataSourceContext;
+import com.cloudtravel.db.config.DataSourceEnums;
 import com.cloudtravel.db.dao.DbBaseUserDao;
 import com.cloudtravel.db.dao.DbSpDao;
 import com.cloudtravel.db.dao.DbTbDao;
@@ -11,6 +13,7 @@ import com.cloudtravel.db.model.DbTbModel;
 import com.cloudtravel.db.service.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +32,7 @@ public class TestServiceImpl implements ITestService {
     DbTbDao dbTbDao;
 
     @Override
-//    @Transactional(rollbackFor = Exception.class , propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class , propagation = Propagation.REQUIRES_NEW , isolation = Isolation.READ_COMMITTED)
     public void test() {
         DbBaseUserModel dbBaseUserModel = new DbBaseUserModel();
         dbBaseUserModel.setBizId("1");
@@ -50,6 +53,6 @@ public class TestServiceImpl implements ITestService {
 
         List<DbTbModel> dbTbModelList = dbTbDao.selectAll();
         System.out.println(JSON.toJSONString(dbTbModelList));
-        throw new RuntimeException("test");
+//        throw new RuntimeException("test");
     }
 }

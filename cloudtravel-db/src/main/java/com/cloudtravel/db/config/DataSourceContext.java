@@ -13,6 +13,7 @@ public class DataSourceContext {
     /** 根据tenantId进行数据源路由策略: (tenantId % 2) +1 */
     private static final int DB_ROUT_FIX = 2;
 
+
     /**
      * 设置当前线程中的数据源
      * @param dataSourceEnum
@@ -34,7 +35,7 @@ public class DataSourceContext {
         switch (tenantIdInt % DB_ROUT_FIX){
             case 0: dataSourceEnum = DataSourceEnums.CLOUDTRAVEL_CONSUMER1;
             break;
-            case 1: dataSourceEnum = DataSourceEnums.cloudtravel_consumer2;
+            case 1: dataSourceEnum = DataSourceEnums.CLOUDTRAVEL_CONSUMER2;
             break;
         }
         setDataSourceType(dataSourceEnum);

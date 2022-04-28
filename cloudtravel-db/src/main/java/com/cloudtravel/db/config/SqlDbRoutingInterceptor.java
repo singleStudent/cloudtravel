@@ -71,6 +71,8 @@ public class SqlDbRoutingInterceptor implements Interceptor {
             throw e;
         }
         Object result = invocation.proceed();
+        Long endTime = System.currentTimeMillis();
+        LOGGER.info("ExecuteDbRouting use time {} ms" , endTime - startTime);
         return result;
     }
 
@@ -90,7 +92,7 @@ public class SqlDbRoutingInterceptor implements Interceptor {
             }
             LOGGER.info("tableName = {} , sqlType = {}" , tableName , sqlType);
             if(PUBLIC_TABLES.contains(tableName)) {
-                LOGGER.info("ExecuteDbRouting error : table: [{}] is public table , route db to public dataBase" , tableName);
+                LOGGER.info("ExecuteDbRouting : table: [{}] is public table , route db to public dataBase" , tableName);
                 DataSourceContext.setDataSourceType(DataSourceEnums.CLOUDTRAVEL_CONSUMER1);
             }else {
                 //读取公共租户标识
