@@ -93,8 +93,8 @@ public class Question2 {
     }
 
     public static void main(String[] args) {
-        List<Point> params = Arrays.asList(new Point(1d , 1d) , new Point(-1d , -1d) ,
-                new Point(-1d , 1d) ,  new Point(1d , -1d));
+        List<Point> params = Arrays.asList(new Point(1d , 1d) , new Point(-1d , 0d) ,
+                new Point(-2d , 2d) ,  new Point(0d , 3d));
         System.out.println(checkParam(params));
     }
 }
