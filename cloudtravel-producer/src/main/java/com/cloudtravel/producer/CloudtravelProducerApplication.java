@@ -1,5 +1,6 @@
 package com.cloudtravel.producer;
 
+import cn.dev33.satoken.SaManager;
 import com.alibaba.boot.dubbo.autoconfigure.DubboAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,7 @@ public class CloudtravelProducerApplication {
 
 	public static void main(String[] args) {
 		 SpringApplication.run(CloudtravelProducerApplication.class, args);
+		 System.out.println("Sa-Token 配置信息如下 : " + SaManager.getConfig());
 	}
 
 }
