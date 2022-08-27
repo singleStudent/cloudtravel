@@ -8,7 +8,7 @@
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <dubbo:reference interface="com.cloudtravel.producer.service.IBaseUserService" id="baseUserService"
-                     check="true" version="1.0"/>
+                     check="true" version="1.0" cache=""/>
 
     <dubbo:reference interface="com.cloudtravel.websocket.common.service.ISysSocketService" id="sysSocketService"
                      check="false" version="1.0"/>

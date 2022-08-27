@@ -1,4 +1,4 @@
-package com.cloudtravel.common.util;
+package com.cloudtravel.common.encrypt;
 /**
  * MD5编码工具类
  *

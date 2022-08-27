@@ -63,7 +63,7 @@ public class OCRUtil {
     }
 
     public static void main(String[] args) {
-        OCRResult ocrResult =  OCRUtil.readImage("D:/1650614487(1).png" , TESSDATA_DEFAULT, LANGUAGE_DEFAULT);
+        OCRResult ocrResult =  OCRUtil.readImage("C:\\Users\\Administrator\\Desktop\\微信图片_20220803110305.jpg" , TESSDATA_DEFAULT, LANGUAGE_DEFAULT);
         System.out.println(JSON.toJSONString(ocrResult));
     }
 }
