@@ -12,8 +12,34 @@ import java.security.Security;
 import java.util.Arrays;
 
 /**
- * @description : SM4加密算法工具类
- * 属于对称加密算法,可用于替代DES/AES等算法,且: SM4算法同AES算法具有相同的密钥长度和分组长度,都是128位.
+ * @description : SM4加密算法工具类--有些涉及线性代数的数学方面的可能理解有点跑偏.凑活看
+ * 属于对称加密算法,可用于替代DES/AES等算法,采用分组加密 ,且SM4算法同AES算法具有相同的密钥长度和分组长度,都是128bits[16进制==>32位].
+ * 整个加解密部分可以拆分成密钥扩展和加解密两步
+ * 密钥扩展:
+ *   一堆线性函数我是没看太懂.简单理解下感觉就是
+ *      1.对密钥进行分组后得到MK=(MK0,MK1,MK2,MK3)
+ *      2.根据(MK0,MK1,MK2,MK3)得到(K0,K1,K2,K3)=(MK0 ⊕ FK0,MK1 ⊕ FK1 , MK2 ⊕ FK2 , MK3 ⊕ FK3)
+ *          其中:FK为系统参数.16进制表示类似于: FK0=(a3b1c6)知道这个就好了.具体的数学学得太垃圾.搞不懂
+ *      3.因为加密时要进行非线性迭代32次 . 所以这里生成32位轮密钥:rk0~rk31
+ *        rk[i] = k[i+4] = K[i] ⊕ T'(K[i+1] ⊕ K[i+2] ⊕ k[i+3] ⊕ CKi)
+ *        其中:
+ *          1.T变换和加密算法中的轮函数基本相同 , 只是将其中的线性变换L换成了:L[B] = B ⊕ (B <<< 13) ⊕ (B <<< 23)
+ *          2. 固定参数CK的取值方法为:设ck[i,j]为CK[i]的第j字节(i=0~31 , j=0~3),
+ *              即CK[i] = (ck[i,0],ck[i,1],ck[i,2],ck[i,3])∈(Z[下标2,上标8]4次方)-依稀记得以前见过这个写法.忘记代表啥了
+ *              其中:ck[i,j] = (4i + j) * 7 (mod 256)共得到32个CKi
+ * 加密过程:包括32次轮迭代[就是非线性迭代]和反序迭代[异或]两步
+ *  32次轮迭代:
+ *      分组明文拆分为(A0 ,A1,A2,A3)结合密码扩展得到的32组轮密码.轮函数F进行32次迭代
+ *      Xi+4=F(Xi,Xi+1,Xi+2,Xi+3,rki)=Xi⊕T(Xi+1⊕Xi+2⊕Xi+3⊕rki),i=0,1,⋯,31
+ *      合成置换 T:Z322→Z322 是一个可逆变换，由非线性变换 τ 和线性变换 L复合而成，即 T(⋅)=L(τ(⋅))。
+ *      线性变换 L： L(B)=B⊕(B<<<2)⊕(B<<<10)⊕(B<<<18)⊕(B<<<24)。
+ *      非线性变换 τ： τ(B)，τ 由4个并行的S盒构成。
+ * 反序迭代:得到的x4~x35中得到x32~x35
+ * 总结下来就是
+ *  1. 先将128比特密钥 MK 扩展为32个轮密钥 rk，
+ *  2. 再将该轮密钥与128比特明文 X 经过轮函数进行32次迭代后，选取最后四次迭代生成的结果 X32,X33,X34,X35 进行反序变换，
+ *      该变换结果作为最终的密文 Y 输出
+ * 解密时算法内容大致一样 . 只不过轮密钥顺序相反
  * @author : walker
  * @date : 2022/8/24 23:45
  */
@@ -56,7 +82,7 @@ public class SM4Utils {
      *  使用分析 : 明文重复不会体现在密文中. 仅解密时支持并行计算 . 需要填充
      *  CFB:[Cipher FeedBack mode]:密文反馈模式
      *      区别于CBC的地方在于,初始化向量和密钥进行加密后和明文分组进行异或处理直接得到密文分组,然后密文分组再加密后和后续的明文分组进行异或处理,
-     *      依次处理.相比而言,每一组的明文加密的过程中比CBC少了一次密钥加密的处理,但是每次异或之前上一组的密文分组[或初始化向量]会先进行加密 .
+     *      依次处理.相比而言,每次异或之前上一组的密文分组[或初始化向量]会先进行加密.再进行异或.
      *      CFB模式中由密码算法生成的二进制序列类似于时一种流式的数据处理
      *      解密时:则逆向处理,先将上一个密文分组进行加密[注意这里依然是加密],再进行异或处理,即得到当前分组的明文.依次而行.
      *  使用分析 : 不需要填充,解密时支持并行计算 .
@@ -90,7 +116,7 @@ public class SM4Utils {
     public static final String ALGORITHM_NAME_ECB_PADDING = "SM4/ECB/PKCS5Padding";
 
 
-    public static final String ALGORITHM_NAME_CBC_PADDING = "SM4/CBC/PKCS5Padding";
+    public static final String ALGORITHM_NAME_CBC_PADDING = "SM4/CFB/PKCS5Padding";
 
     public static final String ALGORITHM_ECB = "ECB";
 
@@ -167,6 +193,7 @@ public class SM4Utils {
         //初始化该类需提供需要转换的算法名
         Cipher cipher = Cipher.getInstance(ALGORITHM_NAME_CBC_PADDING, BouncyCastleProvider.PROVIDER_NAME);
         Key sm4Key = new SecretKeySpec(key , ALGORITHM_NAME);
+        //指定一个初始化向量 . 防止后续加密的过程中被篡改 . 主要用于反馈模式的加密.如CBC,CFB等
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
         cipher.init(mode , sm4Key , ivParameterSpec);
         return cipher;
@@ -205,9 +232,7 @@ public class SM4Utils {
 
 
     /**
-     * 加密 , 加密过程如下:简单讲就是密钥拓展和加密[或解密]两部
-     * 一. 密钥拓展
-     * 1.将密钥
+     * ECB加密
      * @param paramStr
      * @return
      */
@@ -372,13 +397,6 @@ public class SM4Utils {
 
     public static void main(String[] args) throws Exception {
         String data = "你哈哈记得哈健康的哈客户打开链接 按计划大健康的哈利的哈利的好了哈来得及哈萨克的" +
-                "骄傲和看到啦活动卡技术科技阿哈利科技  哈就是大家来客户打卡记录的哈就开始打哈进口量的哈快乐就好" +
-                "你哈哈记得哈健康的哈客户打开链接 按计划大健康的哈利的哈利的好了哈来得及哈萨克的" +
-                "骄傲和看到啦活动卡技术科技阿哈利科技  哈就是大家来客户打卡记录的哈就开始打哈进口量的哈快乐就好" +
-                "你哈哈记得哈健康的哈客户打开链接 按计划大健康的哈利的哈利的好了哈来得及哈萨克的" +
-                "骄傲和看到啦活动卡技术科技阿哈利科技  哈就是大家来客户打卡记录的哈就开始打哈进口量的哈快乐就好"+
-                "骄傲和看到啦活动卡技术科技阿哈利科技  哈就是大家来客户打卡记录的哈就开始打哈进口量的哈快乐就好" +
-                "你哈哈记得哈健康的哈客户打开链接 按计划大健康的哈利的哈利的好了哈来得及哈萨克的" +
                 "骄傲和看到啦活动卡技术科技阿哈利科技  哈就是大家来客户打卡记录的哈就开始打哈进口量的哈快乐就好";
         String a = "8424096784240967";
         //5c6c0a1406853bedfef1c85a5c28f820 f2eb31e858a2c57a225026988670e050
