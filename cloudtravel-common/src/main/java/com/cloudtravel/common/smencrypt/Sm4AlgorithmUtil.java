@@ -11,10 +11,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.util.Arrays;
 
 /**
- * @description : SM4加密算法工具类--有些涉及线性代数的数学方面的可能理解有点跑偏.凑活看
+ * @description : SM4加密算法工具类
  * 属于对称加密算法,可用于替代DES/AES等算法,采用分组加密 ,且SM4算法同AES算法具有相同的密钥长度和分组长度,都是128bits[16进制==>32位].
  * 整个加解密部分可以拆分成密钥扩展和加解密两步
  * 密钥扩展:
@@ -185,6 +184,16 @@ public class Sm4AlgorithmUtil {
         return cipher;
     }
 
+    /**
+     * 验证明文和密文是否被篡改
+     * @param algorithmName 算法名
+     * @param algorithmMode 模式
+     * @param algorithmPadding 填充方式
+     * @param paramStr 明文
+     * @param encryptStr 密文
+     * @return
+     * @throws Exception
+     */
     public static boolean verifyEcb(AlgorithmNameEnums algorithmName ,
                                     AlgorithmModeEnums algorithmMode,
                                     AlgorithmPaddingModeEnums algorithmPadding,
