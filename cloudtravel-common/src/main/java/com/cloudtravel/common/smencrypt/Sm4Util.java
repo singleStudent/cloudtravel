@@ -44,7 +44,7 @@ import java.security.Security;
  * @author : walker
  * @date : 2022/8/24 23:45
  */
-public class Sm4AlgorithmUtil {
+public class Sm4Util {
 
     /** 密钥 */
     public static final String PASSWORD = "5m28850d763e8748ff2f8d83530e0cf2";
@@ -61,6 +61,15 @@ public class Sm4AlgorithmUtil {
         Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME);
         //添加SM加密算法相关支持器
         Security.addProvider(new BouncyCastleProvider());
+    }
+
+    /**
+     * 默认方法: SM2/CBC/PKCS5Padiing
+     * @param param
+     * @return
+     */
+    public static String encrypt(String param) {
+        return encrypt(AlgorithmNameEnums.SM_4 , AlgorithmModeEnums.CBC , AlgorithmPaddingModeEnums.PKCS5_PADDING , param);
     }
 
     /**
@@ -89,6 +98,7 @@ public class Sm4AlgorithmUtil {
                     cipher = generateCipher(algorithmName , algorithmMode , algorithmPadding , Cipher.ENCRYPT_MODE , pwdBytes , iv);
                     cipherArray = cipher.doFinal(paramBytes);
                     cipherText = ByteUtils.toHexString(cipherArray);
+                    //方便展示,就把生成的初始化向量拼接在了后面,需要的话其实可以生成一个固定存为变量或者存到表中
                     cipherText = cipherText + "_" + ByteUtils.toHexString(iv);
                 }else  {
                     cipher = generateCipher(algorithmName , algorithmMode , algorithmPadding , Cipher.ENCRYPT_MODE ,pwdBytes , null);
@@ -104,6 +114,10 @@ public class Sm4AlgorithmUtil {
                     algorithmMode.getModeName() , algorithmPadding.name() , param , e.getMessage()));
         }
         return cipherText;
+    }
+
+    public static String decrypt(String param){
+        return decrypt(AlgorithmNameEnums.SM_4 , AlgorithmModeEnums.CBC , AlgorithmPaddingModeEnums.PKCS5_PADDING , param);
     }
 
     /**

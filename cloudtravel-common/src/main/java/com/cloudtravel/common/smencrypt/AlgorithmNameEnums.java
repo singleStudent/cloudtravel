@@ -7,9 +7,10 @@ package com.cloudtravel.common.smencrypt;
  */
 public enum AlgorithmNameEnums {
 
-    SM_4("SM4" , "SM4加密") ,
 
-    SM_3("SM3" , "SM3加密");
+    SM_2("SM2" , "SM2加密"),
+    SM_3("SM3" , "SM3加密"),
+    SM_4("SM4" , "SM4加密");
 
     private String name;
 
