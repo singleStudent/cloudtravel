@@ -26,9 +26,13 @@ public class RedisTestController {
     @Autowired
     RedissonClient redissonClient;
 
+    private static volatile Integer TOTAL_SAILED = 0;
+
+
     @GetMapping("/redisTest/set")
     public void set() {
         redisUtils.set("SKU-C-COUNT" , 100);
+        TOTAL_SAILED = 0;
         System.out.println("设置成功");
     }
 
@@ -37,13 +41,12 @@ public class RedisTestController {
         return redisUtils.get("testKey");
     }
 
-    private static volatile Integer TOTAL_SAILED = 0;
 
     @GetMapping("/redisTest/testLock")
-    public String testLock() {
+    public String testLock() throws Exception{
         int count = (int)(Math.random() * 10 + 1);
         RLock lock = redissonClient.getLock("SKU-C");
-        lock.tryLock();
+        lock.tryLock(5 , 10 , TimeUnit.SECONDS);
         String msg = "";
         try {
             Integer skuACount = (Integer)redisUtils.get("SKU-C-COUNT");
@@ -52,7 +55,9 @@ public class RedisTestController {
                 redisUtils.set("SKU-C-COUNT" ,100-count);
                 msg += "当前商品未库存未加入缓存,初始化库存数=" + (100-count);
                 TOTAL_SAILED += count;
-            }else if(skuACount > count) {
+            }else if(skuACount == 0 ) {
+                msg += "当前库存为0,待补货";
+            } else if(skuACount >= count) {
                 redisUtils.decr("SKU-C-COUNT" , count);
                 msg += ".库存扣减成功!";
                 TOTAL_SAILED += count;
