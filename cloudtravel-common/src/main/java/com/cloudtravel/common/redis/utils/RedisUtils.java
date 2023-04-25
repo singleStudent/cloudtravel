@@ -1,11 +1,9 @@
 package com.cloudtravel.common.redis.utils;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -133,11 +131,11 @@ public class RedisUtils {
      * @param delta 要减少几(小于0)
      * @return
      */
-    public long decr(String key, long delta){
+    public long decr(String key, Integer delta){
         if(delta<0){
             throw new RuntimeException("递减因子必须大于0");
         }
-        return redisTemplate.opsForValue().increment(key, -delta);
+        return redisTemplate.opsForValue().decrement(key, delta);
     }
 
     //================================Map=================================
@@ -576,6 +574,7 @@ public class RedisUtils {
      * @param listKey
      */
     public Object rifhtPop(String listKey){
+
         //绑定操作
         BoundListOperations<String, Object> boundValueOperations = redisTemplate.boundListOps(listKey);
         return boundValueOperations.rightPop();
