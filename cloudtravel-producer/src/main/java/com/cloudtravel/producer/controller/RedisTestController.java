@@ -28,7 +28,8 @@ public class RedisTestController {
 
     @GetMapping("/redisTest/set")
     public void set() {
-        redisUtils.set("testKey" , "隔离中......");
+        redisUtils.set("SKU-C-COUNT" , 100);
+        System.out.println("设置成功");
     }
 
     @GetMapping("/redisTest/get")
@@ -36,24 +37,29 @@ public class RedisTestController {
         return redisUtils.get("testKey");
     }
 
-    @GetMapping("/redisTest/testLock/{count}")
-    public String testLock(@PathVariable Integer count) {
-        RLock lock = redissonClient.getLock("SKU-B");
+    private static volatile Integer TOTAL_SAILED = 0;
+
+    @GetMapping("/redisTest/testLock")
+    public String testLock() {
+        int count = (int)(Math.random() * 10 + 1);
+        RLock lock = redissonClient.getLock("SKU-C");
         lock.tryLock();
         String msg = "";
         try {
-            Thread.sleep(5000);
-            Integer skuACount = (Integer)redisUtils.get("SKU-B-COUNT");
+            Integer skuACount = (Integer)redisUtils.get("SKU-C-COUNT");
             msg += "当前商品库存="+skuACount +",本次欲购买商品数量="+count;
             if(null == skuACount){
-                redisUtils.set("SKU-B-COUNT" ,100-count);
+                redisUtils.set("SKU-C-COUNT" ,100-count);
                 msg += "当前商品未库存未加入缓存,初始化库存数=" + (100-count);
+                TOTAL_SAILED += count;
             }else if(skuACount > count) {
-                redisUtils.decr("SKU-B-COUNT" , count);
+                redisUtils.decr("SKU-C-COUNT" , count);
                 msg += ".库存扣减成功!";
+                TOTAL_SAILED += count;
             }else {
                 msg += "当前商品库存不足" +count+ ",无法完成下单!";
             }
+            msg += "截止目前,共售出商品数=" + TOTAL_SAILED;
             System.out.println();
         }catch (Exception e) {
             e.printStackTrace();
