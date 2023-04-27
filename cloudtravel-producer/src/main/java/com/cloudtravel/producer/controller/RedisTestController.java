@@ -46,7 +46,7 @@ public class RedisTestController {
     public String testLock() throws Exception{
         int count = (int)(Math.random() * 10 + 1);
         RLock lock = redissonClient.getLock("SKU-C");
-        lock.tryLock(5 , 10 , TimeUnit.SECONDS);
+        lock.tryLock();
         String msg = "";
         try {
             Integer skuACount = (Integer)redisUtils.get("SKU-C-COUNT");

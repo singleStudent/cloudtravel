@@ -68,7 +68,11 @@ public class CloudRedisConfig extends CachingConfigurerSupport{
     @Bean(destroyMethod = "shutdown")
     public RedissonClient redisson() {
         Config config = new Config();
+        //集群部署时的效果
+//        config.useClusterServers().addNodeAddress();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        //看门狗手动指定分布式锁的延期时长
+        config.setLockWatchdogTimeout(30);
         return Redisson.create(config);
     }
 
