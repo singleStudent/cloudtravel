@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -66,13 +65,15 @@ public class CloudRedisConfig extends CachingConfigurerSupport{
     }
 
     @Bean(destroyMethod = "shutdown")
-    public RedissonClient redisson() {
+    public RedissonClient redisson() throws Throwable{
         Config config = new Config();
         //集群部署时的效果
 //        config.useClusterServers().addNodeAddress();
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
         //看门狗手动指定分布式锁的延期时长
         config.setLockWatchdogTimeout(30);
+        //采用哨兵模式实现自动装载
+//        return Redisson.create(Config.fromYAML(new ClassPathResource("redisson.yml").getInputStream()));
         return Redisson.create(config);
     }
 

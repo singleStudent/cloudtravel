@@ -1,0 +1,46 @@
+spring:
+  redis:
+    database: 0
+    password: 12345678 #密码
+    port: 6379
+    timeout: 0
+    pool:
+      max-active: 8 #最大连接数
+      max-idle: 8 #最大空闲连接数
+      max-wait: -1 #最大等待时间
+      min-idle: 0
+    sentinel:
+      master: master1
+      nodes: 127.0.0.1:16001,127.0.0.1:16002
+    server:
+      port: 9090
+
+sentinelServersConfig:
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+  reconnectionTimeout: 3000
+  failedAttempts: 3
+  password: 12345678
+  subscriptionsPerConnection: 5
+  clientName: null
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  slaveSubscriptionConnectionMinimumIdleSize: 1
+  slaveSubscriptionConnectionPoolSize: 50
+  slaveConnectionMinimumIdleSize: 10
+  slaveConnectionPoolSize: 64
+  masterConnectionMinimumIdleSize: 10
+  masterConnectionPoolSize: 64
+  readMode: "SLAVE"
+  sentinelAddresses:
+    - "redis://127.0.0.1:16001"
+    - "redis://127.0.0.1:16002"
+  masterName: "master1"
+  database: 0
+  threads: 0
+  nettyThreads: 0
+  codec: !<org.redisson.codec.JsonJacksonCodec> {}
+  useLinuxNativeEpoll: false
