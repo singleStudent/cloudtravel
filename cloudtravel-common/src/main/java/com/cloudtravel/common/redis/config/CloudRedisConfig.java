@@ -3,11 +3,16 @@ package com.cloudtravel.common.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import io.lettuce.core.ReadFrom;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -18,12 +23,18 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.TimeZone;
 
 /**
  * redis连接配置类
@@ -34,6 +45,26 @@ import java.time.Duration;
 @EnableCaching
 @Configuration
 public class CloudRedisConfig extends CachingConfigurerSupport{
+
+    /**
+     * 主从复制时的读写分离配置
+     * @param factory
+     * @return
+     */
+//    @Bean
+//    public RedisConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties) {
+//        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
+//                redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes())
+//        );
+//
+//        LettucePoolingClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
+//                // 读写分离，若主节点能抗住读写并发，则不需要设置，全都走主节点即可
+//                .readFrom(ReadFrom.ANY_REPLICA)
+//                .build();
+//
+//        return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
+//    }
+
 
     @Bean
     public RedisTemplate<String , Object> redisTemplate(RedisConnectionFactory factory) {
@@ -51,6 +82,11 @@ public class CloudRedisConfig extends CachingConfigurerSupport{
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,
                 ObjectMapper.DefaultTyping.NON_FINAL ,
                 JsonTypeInfo.As.WRAPPER_ARRAY);
+        om.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        om.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        om.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         jackson2JsonRedisSerializer.setObjectMapper(om);
 
         //key-value的序列化模式.key采用String类型 , value采用jackson2JsonRedisSerializer执行序列化

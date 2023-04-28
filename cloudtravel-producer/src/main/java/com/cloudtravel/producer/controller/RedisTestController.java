@@ -44,6 +44,7 @@ public class RedisTestController {
 
     @GetMapping("/redisTest/testLock")
     public String testLock() throws Exception{
+        
         int count = (int)(Math.random() * 10 + 1);
         RLock lock = redissonClient.getLock("SKU-C");
         lock.tryLock();
