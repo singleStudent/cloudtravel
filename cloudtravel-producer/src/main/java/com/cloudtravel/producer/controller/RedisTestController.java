@@ -2,6 +2,7 @@ package com.cloudtravel.producer.controller;
 
 import com.cloudtravel.common.redis.utils.RedisUtils;
 import org.apache.commons.math3.util.MathUtils;
+import org.redisson.api.RList;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class RedisTestController {
         redisUtils.set("SKU-C-COUNT" , 100);
         TOTAL_SAILED = 0;
         System.out.println("设置成功");
+        RList<String> list = redissonClient.getList("");
+        list.add("");
     }
 
     @GetMapping("/redisTest/get")

@@ -48,22 +48,22 @@ public class CloudRedisConfig extends CachingConfigurerSupport{
 
     /**
      * 主从复制时的读写分离配置
-     * @param factory
+     * @param redisProperties
      * @return
      */
-//    @Bean
-//    public RedisConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties) {
-//        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
-//                redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes())
-//        );
-//
-//        LettucePoolingClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
-//                // 读写分离，若主节点能抗住读写并发，则不需要设置，全都走主节点即可
-//                .readFrom(ReadFrom.ANY_REPLICA)
-//                .build();
-//
-//        return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
-//    }
+    @Bean
+    public RedisConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties) {
+        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
+                redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes())
+        );
+
+        LettucePoolingClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
+                // 读写分离，若主节点能抗住读写并发，则不需要设置，全都走主节点即可
+                .readFrom(ReadFrom.REPLICA)
+                .build();
+
+        return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
+    }
 
 
     @Bean
